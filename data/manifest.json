@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "datasets": [
+    {
+      "key": "mendeley-6fd493866k-v1",
+      "id": "6fd493866k",
+      "version": 1,
+      "title": "Data on different sized particulate matter concentration produced from a construction activity",
+      "contributors": [
+        "Daniel Cheriyan"
+      ],
+      "doi": "10.17632/6fd493866k.1",
+      "source_url": "https://data.mendeley.com/datasets/6fd493866k/1",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "accessed_at_utc": "2026-09-30T19:13:24.650778+00:00",
+      "listing_url": "https://data.mendeley.com/public-api/datasets/6fd493866k/files?folder_id=root&version=1&%24start=0&%24limit=1000",
+      "files": [
+        {
+          "id": "0e90751d-092d-4dfa-8b2d-a2db0a44b0a0",
+          "filename": "DIB -data.xlsx",
+          "size_bytes": 189414,
+          "sha256": "42c273d1f89c7d57181478334547934a049637f109e31d7f8132f9c29ecdb613",
+          "download_url": "https://data.mendeley.com/public-files/datasets/6fd493866k/files/0e90751d-092d-4dfa-8b2d-a2db0a44b0a0/file_downloaded",
+          "local_path": "data/raw/mendeley-6fd493866k-v1/DIB -data.xlsx",
+          "verified_sha256": "42c273d1f89c7d57181478334547934a049637f109e31d7f8132f9c29ecdb613"
+        }
+      ],
+      "alterations_to_original_files": "none",
+      "reuse_note": "Attribute the contributors and DOI, link the license, and identify derived changes."
+    }
+  ]
+}
