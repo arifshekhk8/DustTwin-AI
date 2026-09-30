@@ -1,6 +1,6 @@
 # Dataset shortlist and acceptance checks
 
-Checked 1 October 2026. The pages below are primary dataset/publisher sources. File download, schema inspection and quality checks are the next implementation task; none of these datasets has been accepted or used for training yet.
+Checked 1 October 2026. The pages below are primary dataset/publisher sources. The 2020 candidate has now been downloaded and audited; see [the audit](dataset-audit.md). No dataset has been used for training yet.
 
 ## Candidate A — primary construction experiment
 
@@ -10,7 +10,13 @@ The dataset page describes PM10, PM2.5 and PM1 collected during block-wall const
 
 Priority: audit the actual files first. Verify which files are raw, chronological order, sensor IDs, duplicates, missingness and physical units. Check saturation and whether any smoothing uses future samples. Wind measurements and boundary coordinates have not been established by the pages inspected. Do not invent them. One experiment is limited evidence even if several sensors produce many rows.
 
-Proposed use if accepted: preliminary 30-second PM10 forecasting at an observed monitor, with measured replay and explicit limits on generalization. Boundary containment remains a separate simulated extension until actual boundary data exists.
+Audit outcome: the downloaded workbook contains only PM10 ten-minute moving averages with undocumented alignment. Reject it for raw 30-second forecasting. It may be shown as a labelled descriptive processed trace. The advertised raw PM2.5/PM1 channels are absent.
+
+## Candidate D — newer construction and outdoor measurements
+
+[Data on different particulate matter profiles produced in laboratory from construction activity and outdoor monitoring](https://data.mendeley.com/datasets/7f22n9v7hp/1), Komiljon Askarov and Jae-ho Choi, 2024, DOI `10.17632/7f22n9v7hp.1`, CC BY 4.0.
+
+The page describes PM1, PM2.5 and PM10 from OPC-N3, Sniffer4d V2 and PMS5003 instruments in laboratory construction and outdoor settings. A pinned ZIP is being downloaded and inspected. Verify actual native resolution, units, averaging, independent sessions and construction labels before accepting the task. The similar `ffr6869fr7` release must not be counted as independent evidence without checking overlap.
 
 ## Candidate B — related construction dataset
 
