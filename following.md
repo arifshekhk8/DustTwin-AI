@@ -13,7 +13,7 @@ Last updated: 1 October 2026, Asia/Dhaka. This file is the session handover; rep
 
 Planning documents are complete. No datasets have been downloaded into this repository. No model has been trained. No inference service or website has been implemented here. No accuracy or water-saving result is established for this new project.
 
-P0 is waiting only for the daily automation and final remote verification. D1 is the first implementation milestone. D2, M1, M2, I1, S1, W1 and J1 have not started. Read their gates in `plan.md`.
+P0's documents and daily automation are ready. D1 is the first implementation milestone. D2, M1, M2, I1, S1, W1 and J1 have not started. Read their gates in `plan.md`. The final planning checkpoint must be pushed and verified before closing this session.
 
 ## Completed this session
 
@@ -26,7 +26,7 @@ P0 is waiting only for the daily automation and final remote verification. D1 is
 - Added continuation instructions and initial decisions in `AGENTS.md` and `docs/decisions.md`.
 - Created separate meaningful planning commits, pushing each milestone.
 
-No implementation tests have been run because there is no implementation yet. Final document/link and Git checks are recorded below when completed.
+No implementation tests have been run because there is no implementation yet. Document/link and Git checks are recorded below.
 
 ## Exact next task — D1 dataset audit
 
@@ -54,8 +54,26 @@ Priority fixes are already incorporated in `plan.md`: common strategy environmen
 
 ## Daily continuation
 
-User requested automatic daily work. Intended schedule: 09:00 Asia/Dhaka, attached to the current chat. Setup is pending; no active automation is claimed yet. Record the tool-confirmed ID/status and next run here after creation. The local computer and Codex app must be running for local scheduled work.
+User requested automatic daily work. The app confirmed creation of an ACTIVE daily continuation:
+
+- Name: Continue DustTwin daily.
+- Automation ID: `continue-dusttwin-daily`.
+- Schedule: every day at 09:00, using the host's confirmed Asia/Dhaka timezone.
+- Target: this chat, `01a0da1e-d23f-7c61-8109-073351b29767`.
+- First planned wake after setup: 1 October 2026 at 09:00 Asia/Dhaka; no scheduled run has completed yet.
+- Work instruction: read the handover and advance the next verified milestone, commit/push real progress and update this file. Hardware remains deferred.
+
+The saved automation was inspected and its active status, daily time and target chat verified. The host timezone resolves to Asia/Dhaka. The local computer and Codex app must be running for local scheduled work. Scheduled wakeups cannot guarantee completion before the event; additional manual sessions can advance the same queue.
 
 ## Session verification
 
-Pending final checks: document links, `git diff --check`, clean worktree, public remote visibility, commit messages and local/GitHub HEAD equality. Record actual results after running these checks.
+Checks completed on 1 October:
+
+- All relative Markdown document links resolved across nine planning documents.
+- `git diff --check` passed, and the worktree was clean before this final setup update.
+- GitHub reports `arifshekhk8/DustTwin-AI` as PUBLIC with ADMIN access for the authenticated account.
+- Seven planning commits were inspected; all use specific natural messages and have no authorship trailers.
+- Each of those milestones was pushed successfully through `b24c791`.
+- The automation tool confirmed ACTIVE status; its saved daily time and chat target were checked.
+
+Final session action: commit/push this setup checkpoint, repeat the link/whitespace checks and compare local HEAD, `origin/main` and GitHub's branch HEAD. A failure must be recorded before stopping. Do not start D1 in this planning-only session; D1 starts at the next continuation.

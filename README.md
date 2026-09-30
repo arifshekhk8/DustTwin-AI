@@ -14,7 +14,7 @@ Planning and dataset reconnaissance are complete. Training, inference services a
 - [following.md](following.md): current state and the exact next actions.
 - [AGENTS.md](AGENTS.md): instructions for future work sessions.
 - [Dataset shortlist](docs/dataset-shortlist.md): primary sources and suitability checks.
-- [Evaluation protocol](docs/evaluation.md): the frozen forecast task and evaluation gates.
+- [Evaluation protocol](docs/evaluation.md): proposed forecast task and evaluation gates, to freeze after the raw-data audit.
 - [Architecture](docs/architecture.md): model, API, replay and site-control boundaries.
 - [Round 1 checklist](docs/round1-checklist.md): presentation readiness.
 
@@ -24,4 +24,4 @@ The existing [meherabmehu/DustTwin](https://github.com/meherabmehu/DustTwin) fro
 
 ## Work and history
 
-Work will be recorded in small, meaningful commits using the configured Git author, with a push after each completed milestone. Each session updates `following.md` with results, validation, unresolved issues and the next task. Daily continuation is being configured for 09:00 Asia/Dhaka; setup status is recorded in `following.md`.
+Work will be recorded in small, meaningful commits using the configured Git author, with a push after each completed milestone. Each session updates `following.md` with results, validation, unresolved issues and the next task. Daily continuation is active at 09:00 Asia/Dhaka in the current Codex chat. The local computer and app must be running; setup details are recorded in `following.md`.
