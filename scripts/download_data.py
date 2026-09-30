@@ -22,7 +22,7 @@ def curl(url: str, output: Path) -> None:
     subprocess.run(
         [
             "curl", "--silent", "--show-error", "--location", "--fail",
-            "--retry", "2", "--max-time", "60", "--proto", "=https",
+            "--retry", "2", "--connect-timeout", "20", "--max-time", "300", "--proto", "=https",
             "--proto-redir", "=https", "--user-agent", "Mozilla/5.0",
             "--header", "Accept: application/vnd.mendeley-public-dataset.1+json",
             "--output", str(output), url,
@@ -34,6 +34,11 @@ def curl(url: str, output: Path) -> None:
 def sha256(path: Path) -> str:
     with path.open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest()
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise ValueError(message)
 
 
 def acquire(dataset: dict) -> dict:
@@ -53,22 +58,23 @@ def acquire(dataset: dict) -> dict:
         for expected in dataset["files"]:
             file = by_id[expected["id"]]
             details = file["content_details"]
-            assert file["filename"] == expected["filename"], "Filename changed"
-            assert details["size"] == expected["size_bytes"], "Published size changed"
-            assert details["sha256_hash"] == expected["sha256"], "Published hash changed"
+            require(file["filename"] == expected["filename"], "Filename changed")
+            require(details["size"] == expected["size_bytes"], "Published size changed")
+            require(details["sha256_hash"] == expected["sha256"], "Published hash changed")
             filename = expected["filename"]
-            assert Path(filename).name == filename, "Unsafe filename"
+            require(Path(filename).name == filename, "Unsafe filename")
             url = details["download_url"]
             parsed = urlparse(url)
-            assert parsed.scheme == "https" and parsed.hostname == "data.mendeley.com"
+            require(parsed.scheme == "https" and parsed.hostname == "data.mendeley.com", "Unexpected download host")
             local = destination / filename
             cached = (local.exists() and local.stat().st_size == expected["size_bytes"]
                       and sha256(local) == expected["sha256"])
             if not cached:
                 pending = directory / filename
+                print(f"Downloading {key}/{filename}", flush=True)
                 curl(url, pending)
-                assert pending.stat().st_size == expected["size_bytes"], "Download size mismatch"
-                assert sha256(pending) == expected["sha256"], "Download hash mismatch"
+                require(pending.stat().st_size == expected["size_bytes"], "Download size mismatch")
+                require(sha256(pending) == expected["sha256"], "Download hash mismatch")
                 pending.replace(local)
             print(f"Verified {key}/{filename}: {local.stat().st_size} bytes")
             verified.append({**expected, "download_url": url,
