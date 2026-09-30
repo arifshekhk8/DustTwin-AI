@@ -1,23 +1,25 @@
 # Forecast and control evaluation protocol
 
-Status: protocol proposed before file audit and training. Change dataset-dependent choices through a decision record, before final testing.
+Status: task and experiment-group partitions frozen after D1 audit on 1 October 2026. Causal preparation, training and final evaluation have not started. The authoritative task configuration is `configs/forecast-task.json`; D008 records the dataset change.
 
 ## First measured-data task
 
-Given the previous 120 seconds of recorded PM10, predict PM10 30 seconds later at the same monitor. Use measured PM2.5 or weather only if actually available at prediction time. Select an eligible unsaturated OPC monitor by a documented deterministic rule during the audit; do not choose a monitor using final test performance. Keep single-monitor forecasting as the first deliverable.
+Given the previous 120 seconds of recorded OPC-N3 PM10, predict the latest observed PM10 snapshot at a grid time 30 seconds later. Use the raw `PM10(ug/m3)` field in `10.17632/7f22n9v7hp.1`. Exclude `RollMean_*` fields and analysed workbooks. Initial model features use only past PM10; measured optional channels require an explicit later experiment. The source provides one OPC instrument across laboratory sessions. It was selected by data availability/provenance, without evaluating any model's final test performance.
 
-For true two-second sampling, a history contains 60 sampling intervals and the target is 15 intervals ahead. Verify endpoint inclusion explicitly in code. Do not bridge gaps by silently treating irregular records as evenly spaced. Work with elapsed seconds where civil timestamps/timezone are absent, and retain this clock type in exports.
+Native record intervals are approximately one second, with some timestamps rounded to whole seconds. Use elapsed time within each recording. Keep the last original row for a duplicate timestamp, count the removals, and create a one-second grid from that recording's first observation. At each grid time use only the latest raw reading at or before it. A reading older than 1.5 seconds is unavailable. No interpolation from future readings is allowed.
+
+Include both lookback endpoints: `[t - 120, t]` contains 121 snapshots. The target is the available snapshot at `t + 30`, not the next 30th row of an irregular file. Reject windows containing an unavailable history or target. Export the contributing observation times/ages so a target's up-to-1.5-second freshness tolerance is visible. Never bridge recordings or invent missing dates.
 
 ## Data preparation and separation
 
 1. Preserve original observations and file hashes. Record every filter, rejected row and conversion.
 2. Sort by experiment, sensor and time; resolve duplicates deterministically. Derive inputs only from observations at or before forecast issue time.
-3. Reserve the earliest 60% of an experiment timeline for training, the next 20% for validation and the final 20% for test. Apply the same boundaries to simultaneous sensors. For multiple independent experiments, prefer whole-experiment holdout and record that alternative before fitting.
-4. Construct samples whose full history and target lie within their assigned partition. This conservatively removes windows overlapping partition boundaries. No training target or feature value may come from validation or test periods.
+3. Use whole labelled groups: every laboratory recording in groups 1/2 is training, group 3 is validation and group 4 is final test. Outdoor recordings are excluded from this first task. The audit found missing calendar dates and nonchronological folder ordering, so this is a group holdout, not a strict global chronological split. Group 4 is labelled temperature increased; disclose that changed-condition test. Freeze the assignment before fitting.
+4. Construct samples whose full history and target lie within a single recording and its assigned partition. No training target or feature value may come from another recording, validation or test. D2 reports actual retained windows and exclusions, not just raw row counts.
 5. Fit preprocessing and normalization on training only. Avoid bidirectional interpolation, centered smoothing and backfilling from future values. Training-only fitted imputation or causal forward filling may be used when justified; score only targets actually observed.
-6. Keep test labels inaccessible to model selection. If the last segment contains only one activity, report that regime limitation; do not repeatedly move split boundaries to find a favorable result.
+6. Keep test labels inaccessible to model selection. Report the experimental-regime limitations; do not move group assignments to find a favorable result. Quality auditing of source files is complete, but no final model error has been computed.
 
-The forty-minute candidate is one experiment. Many overlapping windows and co-located sensors do not create many independent construction events. Record both sample counts and independent episode counts.
+The accepted archive has twelve laboratory file recordings in four labelled groups, from one instrument/setup. A repeated condition or thousands of overlapping windows do not imply thousands of independent construction events. Record file/group counts and disclose what remains unknown about statistical independence. The rejected forty-minute file is not used for training.
 
 ## Baselines and model selection
 
@@ -26,7 +28,7 @@ The forty-minute candidate is one experiment. Many overlapping windows and co-lo
 - Learned baseline: ridge regression using causal lag values and trailing statistics, with alpha chosen from 0.1, 1 and 10.
 - Candidate: one small gradient-boosted tree ensemble, initially depths 2/3 and 50/100 iterations. Disable any default random holdout that violates the chronological protocol. Freeze all other parameters, seed and dependency versions.
 
-Features: recent PM10 lags, past-only mean/std/slope over 30/60/120 seconds and actual measured optional channels. Exclude future activity labels, retrospective event identity, total-future statistics and simulator hidden state. If pooling monitors later, preserve monitor identity and use the common timeline split.
+Features: recent PM10 lags and past-only mean/std/slope over 30/60/120 seconds. Exclude event elapsed time, drilling-duration labels, experiment identity, future activity labels, total-future statistics and simulator hidden state. If adding channels/monitors later, declare that task and its split before inspecting final test results.
 
 Choose the learned model by validation MAE, then RMSE and simplicity. Retraining on combined train/validation is a documented later choice; keep the initial selection run and artifact reproducible. Evaluate the selected frozen artifact on test once. Do not force the learned model to win; persistence can be competitive.
 

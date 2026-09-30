@@ -1,6 +1,6 @@
 # DustTwin project plan
 
-Version 1.0. Created 1 October 2026. All work dates use Asia/Dhaka.
+Version 1.1. Created and updated 1 October 2026. All work dates use Asia/Dhaka.
 
 ## Objective and scope
 
@@ -13,15 +13,15 @@ The desired final system predicts dust at construction-site boundaries. Availabl
 ## Fixed technical starting point
 
 - Primary pollutant: PM10. PM2.5 is an additional measured input or target only if the selected data actually contains it.
-- First construction forecast target: concentration 30 seconds ahead from the preceding 120 seconds of observations, subject to the raw-data audit.
+- First construction forecast target: latest-observed raw OPC-N3 PM10 snapshot 30 seconds ahead from the preceding 120 seconds, on a causal one-second elapsed grid. See the frozen `configs/forecast-task.json` for freshness and endpoint rules.
 - First baselines: persistence and a causal trailing-average forecast.
 - First learned models: regularized linear regression and one small tree ensemble using causal lag features. Choose the deployed model on validation data before inspecting final test results.
-- Primary construction candidate: the 2020 Mendeley construction activity dataset, documented as a 40-minute experiment sampled every two seconds. Its downloadable files, time ordering, sensor identities and preprocessing must be verified.
+- Accepted first dataset: the 2024 Mendeley raw laboratory construction profiles, DOI `10.17632/7f22n9v7hp.1`. Twelve OPC-N3 recordings contain 53,717 rows. Use whole labelled experiment groups for train/validation/test as documented in the audit. The original 2020 candidate was rejected for this task because its released workbook contains ten-minute moving averages.
 - Frontend: React/TypeScript, retaining the reviewed dashboard's useful interactions through an authorized import or an original implementation.
 - Training and inference: Python, a reproducible training command and a local inference service. Freeze dependency versions when implementation begins.
 - No paid training service is needed for the initial tabular models. Training is intended to run locally.
 
-If the audit does not support a 30-second construction forecast, change the task in an explicit decision record before training. Do not upsample hourly data and treat it as sub-minute measurements. The larger UCI Beijing dataset can support a separate hourly ambient benchmark, not evidence of construction-boundary performance.
+The accepted task demonstrates a laboratory monitor forecast. Missing calendar dates and repeated experimental conditions prevent claims of strict global chronology or cross-site reliability. If preparation exposes another suitability problem, change the task in an explicit decision record before training. Do not upsample hourly data and treat it as sub-minute measurements. The larger UCI Beijing dataset can support a separate hourly ambient benchmark, not evidence of construction-boundary performance.
 
 ## Milestones and gates
 
@@ -45,9 +45,9 @@ These are planned completion windows, not guarantees. Advance by milestone gates
 
 ### 1 October
 
-1. This session: finish P0 and publish the plan; do not start model implementation in the planning session.
-2. Daily continuation at 09:00: audit the 2020 raw construction files first. Allocate at most two focused hours to candidate access/schema checks before making a recorded dataset decision.
-3. Freeze the target, features and chronological split. Implement persistence and trailing-average baselines, then the smallest useful learned model.
+1. Completed: publish P0 planning and configure the 09:00 daily continuation.
+2. Completed in the first implementation session: audit/reject the 2020 processed file, acquire/audit the 2024 replacement and accept a raw laboratory PM10 task. The candidate troubleshooting limit remains two focused hours before recording a decision.
+3. Next: implement frozen causal preparation and whole-group partitions. Implement persistence and trailing-average baselines, then the smallest useful learned model.
 4. Finish the training artifact and validation report where the data gate passes. Prioritize reproducibility over model complexity.
 
 ### 2 October
@@ -65,7 +65,7 @@ Daily continuation handles the next complete work package and updates the handof
 
 ## Dataset decision rules
 
-Read [docs/dataset-shortlist.md](docs/dataset-shortlist.md) and publish an audit before accepting any dataset.
+Read [docs/dataset-shortlist.md](docs/dataset-shortlist.md) and [the completed first audit](docs/dataset-audit.md). Publish an audit before accepting any additional dataset.
 
 1. Verify actual accessible files and reuse terms. Keep raw files outside Git; commit source/version information, hashes and reproducible download instructions.
 2. Confirm timestamps or elapsed-time order, cadence, units, pollutant channels, sensor identities, experimental episodes and preprocessing. Do not infer missing wind measurements or sensor locations.
