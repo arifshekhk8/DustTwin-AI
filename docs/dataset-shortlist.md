@@ -16,7 +16,7 @@ Audit outcome: the downloaded workbook contains only PM10 ten-minute moving aver
 
 [Data on different particulate matter profiles produced in laboratory from construction activity and outdoor monitoring](https://data.mendeley.com/datasets/7f22n9v7hp/1), Komiljon Askarov and Jae-ho Choi, 2024, DOI `10.17632/7f22n9v7hp.1`, CC BY 4.0.
 
-The page describes PM1, PM2.5 and PM10 from OPC-N3, Sniffer4d V2 and PMS5003 instruments in laboratory construction and outdoor settings. A pinned ZIP is being downloaded and inspected. Verify actual native resolution, units, averaging, independent sessions and construction labels before accepting the task. The similar `ffr6869fr7` release must not be counted as independent evidence without checking overlap.
+Audit outcome: the verified nested ZIP has separate raw and analysed files. Raw OPC-N3 exports provide twelve laboratory recordings with 53,717 rows at approximately one-second cadence, plus two outdoor recordings. Accept raw laboratory `PM10(ug/m3)` for the preliminary 30-second monitor forecast, subject to the frozen preparation rules in [the audit](dataset-audit.md). Exclude `RollMean_*` columns. Date precision, duplicate timestamps, one sensor/setup and changed experimental conditions are recorded limitations. The similar `ffr6869fr7` release is not counted as independent evidence.
 
 ## Candidate B — related construction dataset
 

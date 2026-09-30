@@ -33,3 +33,11 @@ Status: authorized by the user. Configure daily continuation at 09:00 Asia/Dhaka
 Date: 1 October 2026. Status: accepted from downloaded-file evidence. The checksum-verified workbook contains PM10 ten-minute moving averages, not the advertised raw PM10/PM2.5/PM1 channels. Smoothing alignment is undocumented. It cannot support the proposed 30-second raw concentration task or establish causality of the input windows.
 
 Retain this file as descriptive, processed construction data. Do not train on it and claim raw short-horizon accuracy. Inspect the newer 2024 construction/outdoor dataset before choosing an ambient fallback. The forecast horizon and monitor remain unfrozen until a suitable measured task passes the audit. See `docs/dataset-audit.md` and `reports/data-audit/mendeley-2020-summary.json`.
+
+## D008 — Accept the newer raw laboratory task
+
+Date: 1 October 2026. Status: accepted following file audit; supersedes D003's primary candidate and D007's pending selection. Use `10.17632/7f22n9v7hp.1`, raw `PM10(ug/m3)` from OPC-N3. Twelve laboratory recordings contain 53,717 rows. Exclude rolling-mean columns, analysed workbooks, other instruments and outdoor recordings from the initial task.
+
+Freeze a 30-second latest-observed PM10 snapshot forecast with a 120-second inclusive lookback, causal one-second gridding and a maximum observation age of 1.5 seconds. Do not give learned models the event clock or drilling label. Put all recordings from groups 1/2 in training, group 3 in validation and group 4 in final test. This retains entire related experimental groups and does not claim a strict calendar ordering where dates are missing or overlap between groups.
+
+The task is a preliminary laboratory monitor forecast, with one instrument/setup and a changed-condition final group. It does not establish outdoor boundary prediction or physical containment effectiveness. Configuration and audit evidence are in `configs/forecast-task.json` and `docs/dataset-audit.md`. D2 must implement and verify these rules before training begins.
