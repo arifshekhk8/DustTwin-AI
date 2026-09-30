@@ -13,7 +13,7 @@ Last updated: 1 October 2026, Asia/Dhaka. This file is the session handover; rep
 
 Planning documents are complete. No datasets have been downloaded into this repository. No model has been trained. No inference service or website has been implemented here. No accuracy or water-saving result is established for this new project.
 
-P0's documents and daily automation are ready. D1 is the first implementation milestone. D2, M1, M2, I1, S1, W1 and J1 have not started. Read their gates in `plan.md`. The final planning checkpoint must be pushed and verified before closing this session.
+P0 is complete: documents are published, daily continuation is active and the planning checkpoint was verified against GitHub. D1 is the first implementation milestone. D2, M1, M2, I1, S1, W1 and J1 have not started. Read their gates in `plan.md`.
 
 ## Completed this session
 
@@ -72,8 +72,9 @@ Checks completed on 1 October:
 - All relative Markdown document links resolved across nine planning documents.
 - `git diff --check` passed, and the worktree was clean before this final setup update.
 - GitHub reports `arifshekhk8/DustTwin-AI` as PUBLIC with ADMIN access for the authenticated account.
-- Seven planning commits were inspected; all use specific natural messages and have no authorship trailers.
-- Each of those milestones was pushed successfully through `b24c791`.
+- Eight planning commits were pushed through `f98a06d`; commit history contains no authorship trailers.
+- Local HEAD, `origin/main` and GitHub's branch HEAD matched `f98a06d30d80fc048a3f54db078e4383b194d271` after that push.
+- Final link and whitespace checks passed and the worktree was clean.
 - The automation tool confirmed ACTIVE status; its saved daily time and chat target were checked.
 
-Final session action: commit/push this setup checkpoint, repeat the link/whitespace checks and compare local HEAD, `origin/main` and GitHub's branch HEAD. A failure must be recorded before stopping. Do not start D1 in this planning-only session; D1 starts at the next continuation.
+This handover records those completed checks. Its own continuity commit is published with the same push/verification workflow. Start D1 at the next continuation; this session completed planning only.
