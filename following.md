@@ -1,80 +1,78 @@
 # Continue from here
 
-Last updated: 1 October 2026, Asia/Dhaka. This file is the session handover; replace stale status and preserve useful evidence when work advances.
+Last updated: 1 October 2026, Asia/Dhaka, after the first manual implementation session. Read this file with `AGENTS.md`, `plan.md` and `docs/decisions.md` before editing.
 
 ## Repository and scope
 
-- Local workspace: `/Users/arif/Documents/Techfest, IIT Bombay/DustTwin-AI`.
+- Workspace: `/Users/arif/Documents/Techfest, IIT Bombay/DustTwin-AI`.
 - Public remote: <https://github.com/arifshekhk8/DustTwin-AI>, branch `main`.
-- Round 1: trained forecasting model, recorded replay, website and site-control simulation. No physical hardware now.
-- Git author is already configured. Use meaningful human-readable messages without AI-contribution tags; push each completed milestone.
+- Round 1 is software: a trained monitor forecast, recorded replay, website and explicitly simulated site control. Hardware remains deferred.
+- Commit/push coherent verified milestones with the configured author and natural messages, without AI-contribution tags or authorship trailers.
 
 ## Current state
 
-Planning documents are complete. No datasets have been downloaded into this repository. No model has been trained. No inference service or website has been implemented here. No accuracy or water-saving result is established for this new project.
+**P0 and D1 are complete. D2 is next.** The initial construction workbook was downloaded and rejected for raw forecasting. A newer raw laboratory dataset is downloaded, audited and accepted. Task and partition rules are frozen. No model has been trained. No model accuracy or water saving has been demonstrated. No inference service or website exists in this new repository yet.
 
-P0 is complete: documents are published, daily continuation is active and the planning checkpoint was verified against GitHub. D1 is the first implementation milestone. D2, M1, M2, I1, S1, W1 and J1 have not started. Read their gates in `plan.md`.
+D2 preparation/baselines, M1 training, M2 final evaluation, I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete. D2 has its configuration but no implementation. No final model test error has been computed.
 
-## Completed this session
+## Accepted data and frozen choices
 
-- Created the public repository with an original README and ignore rules.
-- Wrote `plan.md` with scope, dataset gates, milestones, event schedule and acceptance criteria.
-- Published `docs/dataset-shortlist.md` after checking primary dataset/publisher pages.
-- Published `docs/evaluation.md` before any training or held-out evaluation.
-- Defined model/API/replay/simulation boundaries in `docs/architecture.md`.
-- Added a ten-minute judge story, feasibility worksheet and offline readiness gates in `docs/round1-checklist.md`.
-- Added continuation instructions and initial decisions in `AGENTS.md` and `docs/decisions.md`.
-- Created separate meaningful planning commits, pushing each milestone.
+- Source: Komiljon Askarov and Jae-ho Choi (2024), DOI `10.17632/7f22n9v7hp.1`, CC BY 4.0. Attribution is in the README and audit.
+- A verified 5,312,710-byte nested ZIP is under ignored `data/raw/mendeley-7f22n9v7hp-v1/`.
+- Twelve laboratory OPC-N3 recordings have 53,717 rows, about 14.94 recorded hours, in four labelled experiment groups. Two outdoor recordings contain 7,692 more rows and are excluded from the first model.
+- Select raw `PM10(ug/m3)`. Exclude `RollMean_*`, analysed workbooks and other instruments. First features use past PM10 only.
+- Native logging cadence is approximately one second. Three lab files have no calendar date. Some rounded clocks have duplicates/gaps. No invented dates or strictly chronological group ordering.
+- Freeze a one-second elapsed grid with the latest raw reading at or before each grid time. Keep the last original row for duplicate timestamps and count removals. Snapshots older than 1.5 seconds are unavailable.
+- Use a 120-second inclusive history (121 snapshots), forecasting the latest observed snapshot 30 seconds ahead. Reject any window with unavailable history or target. Never bridge recordings.
+- Whole-group partitions: groups 1/2 training, group 3 validation, group 4 final test. Group 4 is labelled temperature increased, a disclosed changed-condition test. Raw row counts are not prepared window counts.
+- Do not use event elapsed time, drilling labels, episode identity or future activity context as learned features.
+- Authoritative configuration: `configs/forecast-task.json`; decision D008; methods in `docs/evaluation.md`.
 
-No implementation tests have been run because there is no implementation yet. Document/link and Git checks are recorded below.
+## Completed this implementation session
 
-## Exact next task — D1 dataset audit
+1. Added pinned acquisition configuration, `scripts/download_data.py` and `data/manifest.json`, with filenames, versions, sizes, license terms and SHA-256 hashes. Atomic downloads and cached verification work.
+2. Audited `6fd493866k.1`. The actual file contains only PM10 ten-minute moving averages, contrary to its raw multi-pollutant description. A3 has 270 missing initial rows. Rejected it for raw 30-second forecasting in D007; retained descriptive audit evidence.
+3. Found and acquired `7f22n9v7hp.1`. A 60-second download timeout was too short on this connection; a 300-second allowance completed the verified file.
+4. Added `src/dusttwin/data.py` and `scripts/audit_raw_profiles.py`. The archive contains 56 files, including fourteen raw OPC CSV recordings. Archives are read in memory without blindly extracting paths.
+5. Published distributions, cadence diagnostics, member hashes and quality plots in `reports/data-audit/`. No OPC pair shares an identical ten-row PM triplet sequence. This checks duplicate content, not statistical independence.
+6. Accepted the narrower laboratory task in D008. Updated the plan, evaluation protocol and README. Five meaningful implementation commits were pushed through `ef42ae3` before this checkpoint.
 
-1. Start with `git status --short` and `git log -8 --oneline`; check/fetch the remote before editing. Read `AGENTS.md`, `plan.md`, `docs/dataset-shortlist.md`, `docs/evaluation.md` and `docs/decisions.md`.
-2. Inspect and download the necessary files for <https://data.mendeley.com/datasets/6fd493866k/1>. Follow its actual download interface/API and verify the CC BY terms. Do not claim acquisition until local files exist.
-3. Add a repeatable acquisition script and `data/manifest.json` with source DOI/version, access date, exact filenames, sizes and SHA-256 hashes. Keep the raw downloads ignored.
-4. Inspect real file formats, row counts, timestamp/elapsed order, two-second cadence, units, sensor channels, gaps, duplicates, saturation and smoothing. Establish whether the files are raw and how many independent episodes exist. Allocate at most two focused hours to access/schema troubleshooting before documenting the decision.
-5. Write `docs/dataset-audit.md` with actual observations and plots. Record a deterministic monitor choice and accepted target/horizon in `docs/decisions.md`, or explain the rejection and narrower alternative.
-6. Commit and push the verified audit milestone. Advance to causal preparation and baseline predictions only if the data gate passes. Update this handover with real evidence and the next task before ending.
+## Evidence and verification
 
-## Open dependencies and decisions
+Read `docs/dataset-audit.md` for actual counts, field choices, quality policies and limits. `reports/data-audit/` contains JSON summaries for both candidates, the 2024 inventory and visually inspected profile plots. These are measured-data audit plots, not AI predictions.
 
-- Dataset suitability is unverified. One 40-minute experiment cannot establish broad site/weather generalization.
-- Wind and construction-boundary truth have not been established in the shortlisted raw files.
-- The original frontend at `meherabmehu/DustTwin` has no recorded reuse license. Implement an original interface unless permission is documented; this need not block software progress.
-- Team ID, actual registered members/contact details and current organizer instructions must come from the team. Continue independent implementation while these remain missing.
-- No supplier prices, physical calibration or judge feedback exist in this repository yet. Record them only when obtained.
-- Supplied event information lists the Bangladesh zonal on 3 October 2026. Freeze the best verified software demo before the event; hardware still requires explicit instruction later.
+The local `.venv` uses Python 3.14.6. Exact dependencies are in `requirements-audit.txt`. Extraction was independently cross-checked with bundled Python 3.12/numpy/openpyxl. Training dependencies are not installed yet.
 
-## Reference review
+```sh
+.venv/bin/python scripts/download_data.py
+.venv/bin/python scripts/audit_filtered_candidate.py
+.venv/bin/python scripts/audit_raw_profiles.py
+```
 
-The existing frontend was reviewed at `dbb7386e384827fbae7e4571357d2491f4103fdf`. The detailed local review is `/Users/arif/Documents/Techfest, IIT Bombay/DustTwin_Review.md`, and audit outputs are in the sibling `analysis/dusttwin-review/` directory. Those results describe the old heuristic engine, not trained-model performance in this repository.
+Both completed downloads and cached reruns passed their published hash checks. Originals are unchanged. Direct checks passed for raw-column selection, known OLE-date conversion, time-only parsing, 53,717 lab rows, the 56-file inventory and twelve disjoint partitioned lab recordings. All inspected pollutant/context fields were finite and populated; no negative PM was found. Both plots were visually inspected. Links and whitespace passed. These are D1 quality checks, not trained-model tests.
 
-Priority fixes are already incorporated in `plan.md`: common strategy environment, trace-derived results, valid crossing ETA, preserved background, forecast-aware feedback, consistent zones and honest hardware/model labels. The old source build and 26 tests passed during review; that does not verify the new project.
+## Exact next task: D2 causal preparation
 
-## Daily continuation
+1. Check `git status --short`, recent history and `origin/main`. Read D008, the task configuration, evaluation protocol and parser. Reuse the completed audit; do not restart source selection.
+2. Implement `src/dusttwin/preparation.py` and `scripts/prepare_data.py`. Use per-recording elapsed clocks, deterministic duplicate handling and causal one-second snapshots. Preserve contributing observation time/age. Never interpolate from future readings.
+3. Build 121-snapshot histories and 30-second targets only where all required snapshots pass freshness. Record window exclusions/reasons. Keep group assignments fixed; put bulk prepared arrays under ignored `data/processed/`.
+4. Add focused checks for future leakage, exact target time, duplicate handling, stale gaps and recording/partition separation. Verify them before training.
+5. Produce persistence and preceding-60-second trailing-mean predictions on identical eligible samples. Publish validation baseline metrics and prepared split counts/manifests. Keep final test model errors for M2; do not tune against them.
+6. Commit/push verified D2 and refresh this file. Then advance to M1: pin model dependencies, train planned ridge/small gradient-tree candidates, choose on validation, save/reload the artifact and measure actual M4 training time.
 
-User requested automatic daily work. The app confirmed creation of an ACTIVE daily continuation:
+## Remaining dependencies and limits
 
-- Name: Continue DustTwin daily.
-- Automation ID: `continue-dusttwin-daily`.
-- Schedule: every day at 09:00, using the host's confirmed Asia/Dhaka timezone.
-- Target: this chat, `01a0da1e-d23f-7c61-8109-073351b29767`.
-- First planned wake after setup: 1 October 2026 at 09:00 Asia/Dhaka; no scheduled run has completed yet.
-- Work instruction: read the handover and advance the next verified milestone, commit/push real progress and update this file. Hardware remains deferred.
+- One laboratory instrument/setup does not establish outdoor boundary forecasting, calibrated reference accuracy or misting effectiveness. Site transport/control remains a labelled simulation.
+- Original frontend reuse permission is not recorded. Implement our own interface unless a license or permission is supplied; this need not block progress.
+- Actual Team ID, registered members/contact details, current organizer instructions, supplier prices and judge feedback require real team/source information.
+- Supplied event information lists the zonal on 3 October 2026. Prioritize verified local/offline software. Hardware requires explicit team instruction.
 
-The saved automation was inspected and its active status, daily time and target chat verified. The host timezone resolves to Asia/Dhaka. The local computer and Codex app must be running for local scheduled work. Scheduled wakeups cannot guarantee completion before the event; additional manual sessions can advance the same queue.
+## Reference review and daily continuation
 
-## Session verification
+The original review is `/Users/arif/Documents/Techfest, IIT Bombay/DustTwin_Review.md`, at source commit `dbb7386e384827fbae7e4571357d2491f4103fdf`. Its heuristic-engine results and 26 tests do not verify this new project.
 
-Checks completed on 1 October:
+The app previously confirmed ACTIVE daily continuation `continue-dusttwin-daily` at 09:00 Asia/Dhaka, targeting chat `01a0da1e-d23f-7c61-8109-073351b29767`. This session was manual; no scheduled run has completed in the recorded history. The computer and Codex app must be running. The next run starts with D2, verifies progress, commits/pushes and refreshes this handover.
 
-- All relative Markdown document links resolved across nine planning documents.
-- `git diff --check` passed, and the worktree was clean before this final setup update.
-- GitHub reports `arifshekhk8/DustTwin-AI` as PUBLIC with ADMIN access for the authenticated account.
-- Eight planning commits were pushed through `f98a06d`; commit history contains no authorship trailers.
-- Local HEAD, `origin/main` and GitHub's branch HEAD matched `f98a06d30d80fc048a3f54db078e4383b194d271` after that push.
-- Final link and whitespace checks passed and the worktree was clean.
-- The automation tool confirmed ACTIVE status; its saved daily time and chat target were checked.
+## Git verification
 
-This handover records those completed checks. Its own continuity commit is published with the same push/verification workflow. Start D1 at the next continuation; this session completed planning only.
+All five D1 milestones were confirmed on GitHub through `ef42ae3`. Source hashes, document links and whitespace passed. Bulk data and the environment are untracked. Publish this checkpoint, then verify clean worktree and local/`origin/main`/GitHub HEAD equality before ending. If a push fails, record it as pending.
