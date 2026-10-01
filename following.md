@@ -1,6 +1,6 @@
 # Continue from here
 
-Last updated: 1 October 2026, Asia/Dhaka, after D2–M2 in the first scheduled continuation. Read this file with `AGENTS.md`, `plan.md` and `docs/decisions.md` before editing.
+Last updated: 1 October 2026, 10:19 Asia/Dhaka, after D2–M2 and release verification in the first scheduled continuation. Read this file with `AGENTS.md`, `plan.md` and `docs/decisions.md` before editing.
 
 ## Repository and scope
 
@@ -71,7 +71,9 @@ At the frozen illustrative 500 µg/m³ setting, the model matches 13/18 threshol
 
 Saved full compressed traces, pooled/per-recording errors, threshold-run results and three visually inspected plots in `reports/evaluation/`. `models/model-card.md` states the results and limits. Twelve focused tests pass with the artifact present. `scripts/verify_evaluation.py` independently recalculated every published pooled/per-recording error from the 15,065 CSV rows and checked freshness, time/horizon, masks and hashes. Evaluation reruns verify frozen evidence without model selection or rescoring.
 
-Model release `pm10-model-v1` and `scripts/download_model.py` are the publication/verification step after this M2 commit. Preserve this initial artifact/evidence. Do not run a new search using group 4; a later research task needs a new untouched evaluation group/site.
+Published prerelease [First measured PM10 forecast](https://github.com/arifshekhk8/DustTwin-AI/releases/tag/pm10-model-v1), tag `pm10-model-v1` at M2 commit `6497074`. Five uploaded assets include the fitted model, metadata, model card, validation selection and final metrics. GitHub's binary size/SHA-256 match the local artifact. `scripts/download_model.py --output tmp/model-download-check/pm10-initial.joblib` independently downloaded and verified the public asset; a cached rerun passed. Local model inference is usable offline after setup; the full website/judge demo is not built yet.
+
+Preserve this initial artifact/evidence. Do not run a new search using group 4; a later research task needs a new untouched evaluation group/site. Published source hashes and local Markdown links also passed verification.
 
 ## Exact next task: I1 inference and measured replay
 
@@ -96,4 +98,6 @@ The app confirmed ACTIVE daily continuation `continue-dusttwin-daily` at 09:00 A
 
 ## Git verification
 
-D1 was verified through `444c624`; today's D2 (`9b04d27`), frozen fit rules (`5050bb2`) and M1 (`435c93a`) were committed/pushed. M2 tests, source/array/artifact/evidence hashes and whitespace pass. Bulk data, environment and fitted binary remain ignored by ordinary Git. Publish M2, upload/verify the release artifact, then commit the final handover and confirm clean worktree and local/`origin/main`/GitHub HEAD equality. If a push fails, record it as pending.
+D1 was verified through `444c624`; today's D2 (`9b04d27`), frozen fit rules (`5050bb2`), M1 (`435c93a`) and M2 (`6497074`) were committed/pushed with the configured author. No contribution trailers or empty commits. At 10:19 Dhaka, local HEAD, `origin/main` and GitHub API HEAD all equal `64970744b318d3b87fe3e5bd995ee290de8c6c93`, with a clean worktree before this handover edit. The public release is verified.
+
+Commit/push this final checkpoint and confirm equality/cleanliness again before ending. The final checkpoint hash is read from Git at the next session; it cannot be embedded in its own file. Bulk data, environment, temporary verification download and fitted binary remain ignored by ordinary Git. If the checkpoint push fails, record it as pending.
