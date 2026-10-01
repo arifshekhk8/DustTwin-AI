@@ -31,6 +31,8 @@ With both servers running, `cd apps/web && npm run test:e2e` verifies live/saved
 
 The archive manifest is verified after extraction to a fresh temporary folder; the unpacked saved server and complete local document downloads are checked in a browser. Dependency installation from a fresh virtual environment is a separate live portability gate. A team member must still rehearse the spoken pitch and check the projector at the venue. No such human rehearsal is claimed here.
 
+Rebuild the printable packet, if needed, with the optional pinned `requirements-packet.txt` and `python scripts/build_judge_pdf.py`. Restage public documents and rebuild the website afterward. The distributed frontend notices are included locally in `demo/documents/third-party-notices.md`; retain them with copies.
+
 ## Before presenting
 
 Connect power, open the live dashboard and PDF, check the ready badge and run a measured replay. Keep the saved launcher and extracted archive accessible. Close unnecessary laptop applications, confirm the projected page is readable, and use the nine timed presentation sections. Source links are optional; do not rely on them loading during the pitch.

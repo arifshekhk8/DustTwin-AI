@@ -20,7 +20,7 @@ def main() -> None:
     (ROOT / "demo/site.json").write_text(json.dumps(site, indent=2) + "\n")
     documents = ROOT / "demo/documents"
     documents.mkdir(parents=True, exist_ok=True)
-    for relative in ("models/model-card.md", "docs/simulation.md", "docs/inference.md", "docs/feasibility.md", "docs/judge-script.md", "docs/offline-demo.md"):
+    for relative in ("models/model-card.md", "docs/simulation.md", "docs/inference.md", "docs/feasibility.md", "docs/judge-script.md", "docs/offline-demo.md", "docs/third-party-notices.md"):
         if (ROOT / relative).exists():
             shutil.copyfile(ROOT / relative, documents / Path(relative).name)
     packet = ROOT / "output/pdf/dusttwin-judge-packet.pdf"
