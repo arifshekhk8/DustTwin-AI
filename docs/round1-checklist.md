@@ -62,10 +62,10 @@ Estimate water as the sum of zone flow × active duration, with units shown. Est
 - [x] Approved CTRL_V/Theme 2/four-member display details are inserted. Team ID is labelled not issued; unprovided contacts are omitted.
 - [x] Local construction context and source citations are included.
 - [x] The accepted model, permitted replay data, website and service are available on the presentation laptop.
-- [x] Pinned Python packages installed in a clean local environment; five model fixture predictions and artifact checks passed. Unpacked release startup is the final packaging check.
+- [x] Pinned Python packages installed in a clean local environment; five model fixture predictions and artifact checks passed. Unpacked release startup and seven document downloads in both modes pass.
 - [x] The 600-second software journey passes with all external browser requests denied. Physical Wi-Fi is not switched off; human spoken rehearsal is separate.
 - [x] A saved inference replay and screenshots/video are prepared as a labelled backup.
-- [ ] Final archive/fresh-unpack check and tagged release published with actual artifact/data versions (in progress).
+- [x] Final archive/fresh-unpack checks pass; `round1-demo-v1` published with actual artifact/data versions.
 - [ ] Team practices spoken delivery and checks venue projection (team action).
 - [ ] After the event, record actual judge feedback/qualification only when supplied; hardware requires an explicit team instruction.
 

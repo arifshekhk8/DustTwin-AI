@@ -39,7 +39,7 @@ The accepted task demonstrates a laboratory monitor forecast. Missing calendar d
 
 D1–M2 precede claims of model accuracy. I1 may be scaffolded after the API contract is frozen, but a model placeholder must remain labelled. S1 and W1 must use the final traces and saved artifact before the demo is considered integrated.
 
-**Actual completion, 1 October:** P0, D1, D2, M1 and M2 pass their gates. The trained model is frozen; final MAE is 88.405 µg/m³ versus persistence 95.702 and trailing mean 81.565. Warning performance has material false alerts and first-onset misses. This mixed result is preserved in [the model card](models/model-card.md). I1, S1 and W1 pass their integration gates. J1 documents, seven-page PDF, sourced cost basis and 600-second offline software rehearsal are complete; release archive/fresh-unpack verification is the final packaging gate. Human spoken rehearsal remains for the team.
+**Actual completion, 1 October:** P0, D1, D2, M1 and M2 pass their gates. The trained model is frozen; final MAE is 88.405 µg/m³ versus persistence 95.702 and trailing mean 81.565. Warning performance has material false alerts and first-onset misses. This mixed result is preserved in [the model card](models/model-card.md). I1, S1 and W1 pass their integration gates. J1 passes its software gate: documents, seven-page PDF, sourced cost basis, 600-second offline software rehearsal, fresh environment/unpacked archive checks and verified tagged release `round1-demo-v1` are complete. Human spoken rehearsal remains for the team.
 
 ## Schedule before the first round
 
@@ -57,7 +57,7 @@ These are planned completion windows, not guarantees. Advance by milestone gates
 5. Completed today: validated inference, six measured replay recordings, four common controllers and five frozen scenarios.
 6. Completed today: original seven-page website, live/saved fallback, mobile layout and browser/API/fixture checks.
 7. Completed today: sourced indicative costs, ten-minute story, seven-page PDF and actual 600-second offline software journey.
-8. Final packaging: verify the unpacked offline archive and clean live environment; publish the tagged demo and checkpoint. Hardware remains deferred; formal quotes and the human spoken pitch are not manufactured.
+8. Completed final packaging: verified all 188 unpacked files, fresh live/saved startup and published the checked `round1-demo-v1` release. Hardware remains deferred; formal quotes and the human spoken pitch are not manufactured.
 
 ### 2 October
 

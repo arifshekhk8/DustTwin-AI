@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "date": "2026-10-01",
+  "source_commit": "38e2b15149064efd6cf5e15fd593a1e8aa906412",
+  "verified_manifest_files": 188,
+  "servers_from_freshly_unpacked_folder": [
+    {
+      "port": 8002,
+      "mode": "saved_inference"
+    },
+    {
+      "port": 8003,
+      "mode": "live_inference"
+    }
+  ],
+  "live_runtime": "New Python 3.14.6 virtual environment with pinned packages",
+  "documents_checked_per_mode": 7,
+  "forecast_and_simulation_agreement": "passed",
+  "external_requests_attempted": [],
+  "page_errors": []
+}

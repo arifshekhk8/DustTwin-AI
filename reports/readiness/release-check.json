@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-01",
+  "release_url": "https://github.com/arifshekhk8/DustTwin-AI/releases/tag/round1-demo-v1",
+  "tag": "round1-demo-v1",
+  "tag_commit": "38e2b15149064efd6cf5e15fd593a1e8aa906412",
+  "draft": false,
+  "assets_match_local": true,
+  "assets": [
+    {
+      "name": "dusttwin-judge-packet.pdf",
+      "bytes": 31842,
+      "digest": "sha256:1ce03462446a5c87f785742888a92c408540cf39c487a1fca9fcd3b68d0461da",
+      "url": "https://github.com/arifshekhk8/DustTwin-AI/releases/download/round1-demo-v1/dusttwin-judge-packet.pdf"
+    },
+    {
+      "name": "dusttwin-round1-demo-v1.json",
+      "bytes": 313,
+      "digest": "sha256:6413cf632a9933ca942330ce787eaa13563c7534797381ac2149079c335241b0",
+      "url": "https://github.com/arifshekhk8/DustTwin-AI/releases/download/round1-demo-v1/dusttwin-round1-demo-v1.json"
+    },
+    {
+      "name": "dusttwin-round1-demo-v1.sha256",
+      "bytes": 94,
+      "digest": "sha256:d232681d2f980b1ae5f1bab3deba479b76d386424b98054054316b3db10bf1e6",
+      "url": "https://github.com/arifshekhk8/DustTwin-AI/releases/download/round1-demo-v1/dusttwin-round1-demo-v1.sha256"
+    },
+    {
+      "name": "dusttwin-round1-demo-v1.zip",
+      "bytes": 10031653,
+      "digest": "sha256:ffd3a22dfc7cc833a1dbe2ba9b5cef214abc1eb07ffc9f9c0b7c0de8eab34a36",
+      "url": "https://github.com/arifshekhk8/DustTwin-AI/releases/download/round1-demo-v1/dusttwin-round1-demo-v1.zip"
+    }
+  ],
+  "anonymous_public_download": {
+    "passed": true,
+    "bytes": 10031653,
+    "sha256": "ffd3a22dfc7cc833a1dbe2ba9b5cef214abc1eb07ffc9f9c0b7c0de8eab34a36"
+  }
+}
