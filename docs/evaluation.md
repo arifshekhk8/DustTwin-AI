@@ -1,6 +1,6 @@
 # Forecast and control evaluation protocol
 
-Status: task and experiment-group partitions frozen after D1 audit on 1 October 2026. D2 preparation and M1 training/reload checks are complete; final model evaluation is next. The authoritative task configuration is `configs/forecast-task.json`; D008 records the dataset change. [Preparation evidence](preparation.md) defines exact features/counts and [training evidence](training.md) records validation selection.
+Status: D2 preparation, M1 training/reload and M2 frozen held-out evaluation are complete on 1 October 2026. The authoritative task configuration is `configs/forecast-task.json`; D008 records the dataset change. [Preparation evidence](preparation.md) defines exact features/counts, [training evidence](training.md) records validation selection, and [the model card](../models/model-card.md) reports the mixed final result. Test data must not be reused to tune this artifact.
 
 ## First measured-data task
 

@@ -26,7 +26,7 @@ Before inspecting test performance, [demo-events.json](../configs/demo-events.js
 | Boosted trees depth 3, 50 iterations | 119.185 | 306.970 | 0.0369 |
 | **Selected: depth 3, 100 iterations** | **117.186** | **305.217** | **0.0550** |
 
-The selected learned model reduces validation MAE by 22.13% relative to persistence. This is validation forecast error improvement only. Its mean signed validation error is −21.75 µg/m³, and performance differs by recording; see the full JSON. No negative validation predictions required clipping. The final test remains unscored at this checkpoint.
+The selected learned model reduces validation MAE by 22.13% relative to persistence. This is validation forecast error improvement only. Its mean signed validation error is −21.75 µg/m³, and performance differs by recording; see the full JSON. No negative validation predictions required clipping. The final test was unscored at the M1 checkpoint; subsequent M2 results are reported separately in [the model card](../models/model-card.md).
 
 On this Apple M4, seven fits took 0.2133 seconds in total. The preparation-loading/fit/validation/artifact run took 0.3163 seconds **excluding imports**. Dependency installation and first library startup are outside those timings. No GPU or Kaggle was used. The selected compressed artifact is 54,679 bytes with SHA-256 `d78f1b37269f72af45933e01722968fb13ed82178f6d8b3e4c5584d46cec09c7`.
 

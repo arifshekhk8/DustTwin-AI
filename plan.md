@@ -1,6 +1,6 @@
 # DustTwin project plan
 
-Version 1.1. Created and updated 1 October 2026. All work dates use Asia/Dhaka.
+Version 1.2. Created and updated 1 October 2026. All work dates use Asia/Dhaka.
 
 ## Objective and scope
 
@@ -39,6 +39,8 @@ The accepted task demonstrates a laboratory monitor forecast. Missing calendar d
 
 D1–M2 precede claims of model accuracy. I1 may be scaffolded after the API contract is frozen, but a model placeholder must remain labelled. S1 and W1 must use the final traces and saved artifact before the demo is considered integrated.
 
+**Actual completion, 1 October:** P0, D1, D2, M1 and M2 pass their gates. The trained model is frozen; final MAE is 88.405 µg/m³ versus persistence 95.702 and trailing mean 81.565. Warning performance has material false alerts and first-onset misses. This mixed result is preserved in [the model card](models/model-card.md). I1, S1, W1 and J1 remain incomplete.
+
 ## Schedule before the first round
 
 These are planned completion windows, not guarantees. Advance by milestone gates and update `following.md` after every session.
@@ -47,13 +49,13 @@ These are planned completion windows, not guarantees. Advance by milestone gates
 
 1. Completed: publish P0 planning and configure the 09:00 daily continuation.
 2. Completed in the first implementation session: audit/reject the 2020 processed file, acquire/audit the 2024 replacement and accept a raw laboratory PM10 task. The candidate troubleshooting limit remains two focused hours before recording a decision.
-3. Next: implement frozen causal preparation and whole-group partitions. Implement persistence and trailing-average baselines, then the smallest useful learned model.
-4. Finish the training artifact and validation report where the data gate passes. Prioritize reproducibility over model complexity.
+3. Completed in the first scheduled run: causal preparation, whole-group partitions and two baselines; all 51,996 prepared windows pass provenance/causality checks.
+4. Completed: seven-candidate training, selected artifact/reload and final held-out evaluation. Small CPU fits on M4 took 0.2133 seconds total, excluding imports. Mixed baseline/warning results are documented without test tuning.
 
 ### 2 October
 
-1. Complete held-out evaluation and the model card.
-2. Connect actual inference and measured-data replay to the website.
+1. Held-out evaluation and model card are already complete. Verify the frozen artifact/evidence, then advance I1.
+2. Connect actual inference and measured-data replay to the website, keeping learned and baseline options visible.
 3. Repair the shared strategy runner, timing and labels; derive results from saved traces.
 4. Prepare offline replay, cost/deployment assumptions and rehearse the ten-minute story.
 
@@ -119,4 +121,4 @@ At session start read `AGENTS.md`, `following.md`, this plan and recent Git hist
 - Multiple meaningful planning commits are pushed and verified.
 - Daily continuation is active at 09:00 Asia/Dhaka, with its result recorded.
 
-References and dataset facts are documented in the linked shortlist. No model metrics are available yet.
+References and dataset facts are documented in the linked shortlist. Actual model results are in `reports/training/`, `reports/evaluation/` and `models/model-card.md`. Simulated control metrics remain unavailable until S1.

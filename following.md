@@ -1,6 +1,6 @@
 # Continue from here
 
-Last updated: 1 October 2026, Asia/Dhaka, during the first scheduled continuation. Read this file with `AGENTS.md`, `plan.md` and `docs/decisions.md` before editing.
+Last updated: 1 October 2026, Asia/Dhaka, after D2–M2 in the first scheduled continuation. Read this file with `AGENTS.md`, `plan.md` and `docs/decisions.md` before editing.
 
 ## Repository and scope
 
@@ -11,9 +11,9 @@ Last updated: 1 October 2026, Asia/Dhaka, during the first scheduled continuatio
 
 ## Current state
 
-**P0, D1, D2 and M1 are complete. M2 is next.** The selected model is `hist_gb_depth3_iter100`, trained only on groups 1/2 and chosen using group 3 validation. Its saved artifact reloads and reproduces the fixture. No final test model error or water saving has been computed. No inference service or website exists in this new repository yet.
+**P0, D1, D2, M1 and M2 are complete. I1 is next.** The selected model is `hist_gb_depth3_iter100`, trained only on groups 1/2 and chosen using group 3 validation. The artifact reloads and reproduces the fixture; held-out results are published honestly. No water saving has been computed. No inference service or website exists in this new repository yet.
 
-M2 final evaluation, I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete.
+I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete. Keep measured forecasting separate from simulated site control throughout these remaining milestones.
 
 ## Accepted data and frozen choices
 
@@ -41,7 +41,7 @@ M2 final evaluation, I1 integration, S1 simulation, W1 website and J1 presentati
 
 Read `docs/dataset-audit.md` for actual counts, field choices, quality policies and limits. `reports/data-audit/` contains JSON summaries for both candidates, the 2024 inventory and visually inspected profile plots. These are measured-data audit plots, not AI predictions.
 
-The local `.venv` uses Python 3.14.6. Exact dependencies are in `requirements-audit.txt`. Extraction was independently cross-checked with bundled Python 3.12/numpy/openpyxl. Training dependencies are not installed yet.
+The local `.venv` uses Python 3.14.6. Exact audit dependencies are in `requirements-audit.txt`; installed training dependencies are pinned in `requirements-model.txt`. Extraction was independently cross-checked with bundled Python 3.12/numpy/openpyxl.
 
 ```sh
 .venv/bin/python scripts/download_data.py
@@ -55,21 +55,31 @@ Both completed downloads and cached reruns passed their published hash checks. O
 
 Added shared causal preparation, sixteen frozen PM10 features, prepared partitions and per-recording grids retaining contributing native observation times/ages/row indices. Removed eighteen duplicate rows. Prepared 24,818 training, 12,113 validation and 15,065 test windows. No remaining candidate window fails freshness. See `docs/preparation.md` and `reports/preparation/split-manifest.json`.
 
-Six focused tests passed. Independent native-file verification passed for all 51,996 windows. Validation persistence MAE/RMSE: 150.493/392.608 µg/m³; trailing mean: 132.725/407.965 µg/m³. No final test model errors inspected. Model libraries were installed successfully; exact versions must be saved before fitting.
+Six focused preparation tests passed. Independent native-file verification passed for all 51,996 windows. Validation persistence MAE/RMSE: 150.493/392.608 µg/m³; trailing mean: 132.725/407.965 µg/m³. At the D2 checkpoint, no final test model errors had been inspected. Model libraries were installed and pinned before fitting.
 
 ## First daily run: completed M1
 
 Pinned `requirements-model.txt` and froze seven candidates plus descriptive event rules in `5050bb2` before fitting. Selected depth-3, 100-iteration histogram boosting by validation MAE (117.186 µg/m³; RMSE 305.217), versus persistence 150.493/392.608. Validation MAE improvement is 22.13%, not pollution reduction or final accuracy. All candidate/per-recording results and settings are in `reports/training/validation-selection.json`.
 
-The M4 used 0.2133 seconds for all seven fits and 0.3163 seconds for the run excluding imports. The 54,679-byte artifact is ignored at `models/artifacts/pm10-initial.joblib`; its SHA-256 is `d78f1b37269f72af45933e01722968fb13ed82178f6d8b3e4c5584d46cec09c7`. Metadata, dependency/config/source hashes and the fixed fixture are public. Fresh-process verification passed for feature and history inference. Training-only scaling and disabled random early stopping passed. No test error has been computed.
+The M4 used 0.2133 seconds for all seven fits and 0.3163 seconds for the run excluding imports. The 54,679-byte artifact is ignored at `models/artifacts/pm10-initial.joblib`; its SHA-256 is `d78f1b37269f72af45933e01722968fb13ed82178f6d8b3e4c5584d46cec09c7`. Metadata, dependency/config/source hashes and the fixed fixture are public. Fresh-process verification passed for feature and history inference. Training-only scaling and disabled random early stopping passed. Test remained unscored until this selected artifact was committed/pushed in `435c93a`.
 
-## Exact next task: M2 frozen evaluation
+## First daily run: completed M2
 
-1. Inspect worktree/remote; preserve concurrent work. Read frozen task/features/training/demo-events, validation selection and model metadata. Do not change selection or refit with test.
-2. Evaluate the selected hash-verified artifact and both baselines on all 15,065 eligible group-4 samples once. Save complete forecast traces with issue/target/contributing observation times and freshness.
-3. Report pooled/per-recording MAE/RMSE, residuals, target range and failures. Run the predeclared threshold warning rules descriptively, disclosing small event counts. Preserve results if learned model loses.
-4. Verify metrics against exported traces and visually inspect plots. Write `models/model-card.md`. Publish M2 and a downloadable trusted artifact for reproducible/offline use.
-5. Advance I1 next: shared validated inference API and measured replay from the actual saved model, before site simulation or website claims. Read `docs/architecture.md` first.
+Evaluated the frozen artifact once on all 15,065 eligible group-4 windows. Test MAE/RMSE (µg/m³): model **88.405/179.272**, persistence **95.702/199.384**, trailing mean **81.565/200.713**. Model MAE is 7.62% below persistence but 8.39% above trailing mean. It fails materially on the ten-second-label recording and abrupt rises; the model/selection has not been changed to improve test results. D010 records this decision.
+
+At the frozen illustrative 500 µg/m³ setting, the model matches 13/18 threshold runs with 15 false alerts, versus trailing mean 13/18 with 8 false alerts. Only one of three first onsets has a valid advance learned warning. Runs recross within three recordings and are not independent activity events. A 30-second forecast horizon is not a promise of 30-second warning lead.
+
+Saved full compressed traces, pooled/per-recording errors, threshold-run results and three visually inspected plots in `reports/evaluation/`. `models/model-card.md` states the results and limits. Twelve focused tests pass with the artifact present. `scripts/verify_evaluation.py` independently recalculated every published pooled/per-recording error from the 15,065 CSV rows and checked freshness, time/horizon, masks and hashes. Evaluation reruns verify frozen evidence without model selection or rescoring.
+
+Model release `pm10-model-v1` and `scripts/download_model.py` are the publication/verification step after this M2 commit. Preserve this initial artifact/evidence. Do not run a new search using group 4; a later research task needs a new untouched evaluation group/site.
+
+## Exact next task: I1 inference and measured replay
+
+1. Inspect worktree/history/remote and read `docs/architecture.md`, the model card and D010. Confirm the saved/downloaded model hash. Use `.venv/bin/python scripts/verify_model.py`; do not redo selection or evaluate a replacement on group 4.
+2. Pin FastAPI/service dependencies. Implement the planned local service under `services/inference/`, loading `ForecastModel` once. Validate task/OPC-N3 monitor, units, clock, issue time, causal history and frozen freshness. No future values, arbitrary model uploads or fabricated confidence/ETA.
+3. Define the replay contract from actual per-recording grids and the frozen artifact. Keep native observation times/freshness visible; reveal actual targets only when the recorded clock reaches them. Return both labelled baselines with the learned output. Preserve input-snapshot IDs and discard stale responses.
+4. Check exact agreement between the saved fixture/shared history inference and API, plus missing/stale data, malformed/nonfinite inputs, wrong task/units/horizon and future timestamps. Save an attributed local replay/evidence fixture for offline use. Do not claim browser agreement until a browser interface exists.
+5. Commit/push verified I1 and update this handover. Then S1 shared strategy simulation, W1 original React/TypeScript interface and J1 offline ten-minute rehearsal. Read the reference review for known water/ambient/zone/switching defects; derive simulation numbers from traces.
 
 ## Remaining dependencies and limits
 
@@ -82,8 +92,8 @@ The M4 used 0.2133 seconds for all seven fits and 0.3163 seconds for the run exc
 
 The original review is `/Users/arif/Documents/Techfest, IIT Bombay/DustTwin_Review.md`, at source commit `dbb7386e384827fbae7e4571357d2491f4103fdf`. Its heuristic-engine results and 26 tests do not verify this new project.
 
-The app confirmed ACTIVE daily continuation `continue-dusttwin-daily` at 09:00 Asia/Dhaka, targeting chat `01a0da1e-d23f-7c61-8109-073351b29767`. The first scheduled run on 1 October is in progress and has completed D2. The computer and Codex app must be running. Resume the first incomplete milestone recorded above.
+The app confirmed ACTIVE daily continuation `continue-dusttwin-daily` at 09:00 Asia/Dhaka, targeting chat `01a0da1e-d23f-7c61-8109-073351b29767`. The first scheduled run on 1 October completed D2, M1 and M2. The next scheduled run is 2 October at 09:00 Dhaka, or a manual session can advance I1 sooner. The computer and Codex app must be running.
 
 ## Git verification
 
-D1 and its checkpoint were confirmed on GitHub through `444c624`. D2 tests, source/array hashes and whitespace passed. Bulk data and the environment are ignored. Publish the D2 milestone, then confirm local/`origin/main`/GitHub HEAD equality. If a push fails, record it as pending.
+D1 was verified through `444c624`; today's D2 (`9b04d27`), frozen fit rules (`5050bb2`) and M1 (`435c93a`) were committed/pushed. M2 tests, source/array/artifact/evidence hashes and whitespace pass. Bulk data, environment and fitted binary remain ignored by ordinary Git. Publish M2, upload/verify the release artifact, then commit the final handover and confirm clean worktree and local/`origin/main`/GitHub HEAD equality. If a push fails, record it as pending.

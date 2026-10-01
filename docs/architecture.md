@@ -1,13 +1,13 @@
 # Model and software prototype architecture
 
-This is an implementation contract, not a description of completed functionality.
+This remains the integration contract. Preparation, the trained artifact and its evaluation are complete; API/replay, website and site control remain to be implemented.
 
 ## Components and data flow
 
 ```mermaid
 flowchart LR
   D[Recorded construction measurements] --> Q[Audit and causal preparation]
-  Q --> T[Train and chronological evaluation]
+  Q --> T[Train and whole-group evaluation]
   T --> A[Versioned model artifact]
   D --> R[Recorded event replay]
   R --> P[Validated prediction API]
@@ -92,6 +92,6 @@ A controller receives only current/past observations and available forecasts. It
 
 The trained artifact and a permitted replay fixture are available locally. Start the API and website with documented commands. Export or serve a replayable evidence packet for a local static fallback, labelled as saved inference results if the API is unavailable. Network access is not required for the rehearsed presentation.
 
-Check one known input snapshot through training/evaluation, API and browser paths; values must agree. Verify pause/reset, strategy isolation, units, model-unavailable behavior and chart/trace agreement. Follow existing source reuse permission before importing the reviewed frontend. The model/API implementation and website are future milestones, not completed planning outputs.
+Check one known input snapshot through training/evaluation, API and browser paths; values must agree. Verify pause/reset, strategy isolation, units, model-unavailable behavior and chart/trace agreement. Follow existing source reuse permission before importing the reviewed frontend. The fitted model is complete; API/browser agreement and offline website rehearsal remain unverified until those components exist.
 
 Primary implementation references: [scikit-learn time-series splits](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html), [gradient boosting regressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html), and [FastAPI request bodies](https://fastapi.tiangolo.com/tutorial/body/).
