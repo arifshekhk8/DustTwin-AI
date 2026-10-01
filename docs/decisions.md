@@ -41,3 +41,9 @@ Date: 1 October 2026. Status: accepted following file audit; supersedes D003's p
 Freeze a 30-second latest-observed PM10 snapshot forecast with a 120-second inclusive lookback, causal one-second gridding and a maximum observation age of 1.5 seconds. Do not give learned models the event clock or drilling label. Put all recordings from groups 1/2 in training, group 3 in validation and group 4 in final test. This retains entire related experimental groups and does not claim a strict calendar ordering where dates are missing or overlap between groups.
 
 The task is a preliminary laboratory monitor forecast, with one instrument/setup and a changed-condition final group. It does not establish outdoor boundary prediction or physical containment effectiveness. Configuration and audit evidence are in `configs/forecast-task.json` and `docs/dataset-audit.md`. D2 must implement and verify these rules before training begins.
+
+## D009 — Freeze first fit and descriptive warning rules
+
+Date: 1 October 2026. Status: accepted after D2 verification, before any learned model fit. Use sixteen PM10-only lag/statistic features, the seven previously planned ridge/tree candidates and the unchanged group split. Freeze full settings in `configs/training.json`. Fit scaling on training only, disable random early stopping, cap native threads at four and clip negative learned predictions to zero consistently. Choose using validation MAE, then RMSE, then simpler candidate order; keep the artifact trained on groups 1/2 only.
+
+Freeze the illustrative warning experiment in `configs/demo-events.json` before final testing: 500 µg/m³ demo setting, five consecutive available snapshots, 60-second cooldown, one-to-one warning matches within the next 30 seconds. This is descriptive, not a health/regulatory threshold or a calibrated event-probability claim. Exact ETA still needs an explicitly predicted trajectory. Pin model dependencies in `requirements-model.txt`.
