@@ -1,0 +1,90 @@
+"""Local DustTwin API. Start with scripts/serve.py after building the website."""
+
+from contextlib import asynccontextmanager
+import json
+from pathlib import Path
+import sys
+
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
+from dusttwin.inference import InferenceEngine, PredictionRequest
+from dusttwin.model import ForecastModel
+from dusttwin.replay import ReplayStore
+
+
+def create_app(root: Path = ROOT, load_model: bool = True) -> FastAPI:
+    @asynccontextmanager
+    async def lifespan(app):
+        app.state.engine = None
+        app.state.model_error = None
+        if load_model:
+            try:
+                app.state.engine = InferenceEngine(ForecastModel(root))
+            except (OSError, ValueError) as error:
+                app.state.model_error = str(error)
+        else:
+            app.state.model_error = "Live model intentionally unavailable"
+        app.state.replay = ReplayStore(root)
+        yield
+
+    app = FastAPI(title="DustTwin", version="1.0.0", lifespan=lifespan, docs_url=None, redoc_url=None)
+
+    @app.exception_handler(RequestValidationError)
+    async def invalid_request(request, exception):
+        # Exclude raw invalid inputs/exception objects, including NaN/Infinity.
+        return JSONResponse(status_code=422, content={"code": "invalid_request", "errors": [
+            {"field": ".".join(map(str, item["loc"])), "message": item["msg"]} for item in exception.errors()]})
+
+    @app.get("/health")
+    def health():
+        engine = app.state.engine
+        return {"ready": engine is not None, "mode": "live_inference" if engine else "saved_inference",
+                "model_id": app.state.replay.index["model_id"], "artifact_sha256": app.state.replay.index["artifact_sha256"],
+                "task_id": "construction_pm10_30s_v1", "monitor_id": "OPC-N3", "horizon_seconds": 30,
+                "grid_interval_seconds": 1, "reason": app.state.model_error}
+
+    @app.post("/v1/predict")
+    def predict(request: PredictionRequest):
+        if app.state.engine is None:
+            raise HTTPException(503, "Live trained model unavailable; use the labelled saved replay")
+        return app.state.engine.predict(request)
+
+    @app.get("/v1/replay")
+    def replay_index():
+        return app.state.replay.index
+
+    @app.get("/v1/replay/{episode_id}")
+    def replay_snapshot(episode_id: str, second: int = Query(ge=120)):
+        try:
+            return app.state.replay.snapshot(episode_id, second, app.state.engine)
+        except KeyError as error:
+            raise HTTPException(404, str(error)) from error
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from error
+
+    @app.get("/v1/evidence")
+    def evidence():
+        return {"metadata": json.loads((root / "models/model-metadata.json").read_text()),
+                "test": json.loads((root / "reports/evaluation/test-metrics.json").read_text()),
+                "training": json.loads((root / "reports/training/validation-selection.json").read_text())}
+
+    app.mount("/demo", StaticFiles(directory=root / "demo"), name="demo")
+    app.mount("/reports", StaticFiles(directory=root / "reports"), name="reports")
+    dist = root / "apps/web/dist"
+    if dist.exists():
+        app.mount("/assets", StaticFiles(directory=dist / "assets"), name="assets")
+
+        @app.get("/{path:path}")
+        def website(path: str):
+            if path.startswith(("v1/", "health", "openapi")):
+                raise HTTPException(404, "Unknown API route")
+            return FileResponse(dist / "index.html")
+    return app
+
+
+app = create_app()

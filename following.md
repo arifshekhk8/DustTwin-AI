@@ -11,9 +11,9 @@ Last updated: 1 October 2026, 10:19 Asia/Dhaka, after D2–M2 and release verifi
 
 ## Current state
 
-**P0, D1, D2, M1 and M2 are complete. I1 is next.** The selected model is `hist_gb_depth3_iter100`, trained only on groups 1/2 and chosen using group 3 validation. The artifact reloads and reproduces the fixture; held-out results are published honestly. No water saving has been computed. No inference service or website exists in this new repository yet.
+**P0 through I1 are complete. S1 is next.** The local service uses the frozen artifact; validation/test replay and labelled saved fallback exist. Fifteen Python tests pass, including five fixture/API matches, causal validation and delayed target reveal. The user requires all remaining software work today (D011). No simulated water saving has been computed yet; the website is next after S1.
 
-I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete. Keep measured forecasting separate from simulated site control throughout these remaining milestones.
+S1 simulation, W1 website and J1 presentation remain incomplete. Keep measured forecasting separate from simulated site control throughout these remaining milestones.
 
 ## Accepted data and frozen choices
 
@@ -75,13 +75,23 @@ Published prerelease [First measured PM10 forecast](https://github.com/arifshekh
 
 Preserve this initial artifact/evidence. Do not run a new search using group 4; a later research task needs a new untouched evaluation group/site. Published source hashes and local Markdown links also passed verification.
 
-## Exact next task: I1 inference and measured replay
+## I1 implementation completed in the follow-up session
+
+Added `src/dusttwin/inference.py`, `replay.py`, the local FastAPI app and launcher; pinned service requirements. Exported six CC BY attributed, hash-pinned recording/forecast files under `demo/replay/`. Shared feature/model path, strict freshness/time validation, no future target reveal and unavailable-model saved fallback pass tests. Read `docs/inference.md` for the exact implemented contract.
+
+The team is CTRL_V with the four user-supplied names in `configs/team.json`. Team ID has not been issued. Contact/qualification are not invented. Finish the remaining software today per D011, rather than waiting for tomorrow's automation.
+
+## Earlier I1 handover (completed; retained for context)
 
 1. Inspect worktree/history/remote and read `docs/architecture.md`, the model card and D010. Confirm the saved/downloaded model hash. Use `.venv/bin/python scripts/verify_model.py`; do not redo selection or evaluate a replacement on group 4.
 2. Pin FastAPI/service dependencies. Implement the planned local service under `services/inference/`, loading `ForecastModel` once. Validate task/OPC-N3 monitor, units, clock, issue time, causal history and frozen freshness. No future values, arbitrary model uploads or fabricated confidence/ETA.
 3. Define the replay contract from actual per-recording grids and the frozen artifact. Keep native observation times/freshness visible; reveal actual targets only when the recorded clock reaches them. Return both labelled baselines with the learned output. Preserve input-snapshot IDs and discard stale responses.
 4. Check exact agreement between the saved fixture/shared history inference and API, plus missing/stale data, malformed/nonfinite inputs, wrong task/units/horizon and future timestamps. Save an attributed local replay/evidence fixture for offline use. Do not claim browser agreement until a browser interface exists.
 5. Commit/push verified I1 and update this handover. Then S1 shared strategy simulation, W1 original React/TypeScript interface and J1 offline ten-minute rehearsal. Read the reference review for known water/ambient/zone/switching defects; derive simulation numbers from traces.
+
+## Exact next task: S1 shared strategy experiment
+
+Implement one common transport/actuator runner, no-control/continuous/reactive/predictive controllers, identical plant/nozzle assumptions, A=north/B=east/C=south/D=west, meteorological wind-from conversion, preserved background and equal switching limits. Predictive control may use only past source-proxy readings and the frozen artifact; spatial mapping and endpoint-to-trajectory assumptions must be explicit simulation assumptions. Freeze low-risk, east, diagonal, wind-shift and data-loss cases. Export all controller traces and derive every metric from them; verify determinism, water, ambient floor, risk coverage, unavailable input and ETA states. Then build W1 and J1 today.
 
 ## Remaining dependencies and limits
 

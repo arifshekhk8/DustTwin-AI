@@ -53,3 +53,9 @@ Freeze the illustrative warning experiment in `configs/demo-events.json` before 
 Date: 1 October 2026. Status: accepted after M2 evaluation of the artifact selected on validation. The trained model has test MAE 88.405 and RMSE 179.272 µg/m³. Persistence has 95.702/199.384; trailing mean has 81.565/200.713. Learned MAE improves on persistence by 7.62% but is worse than trailing mean by 8.39%; the ten-second-label recording is a material failure. Preserve the selected artifact, baseline comparison and negative evidence; do not retune against this test group.
 
 The predeclared warning experiment yields 13 matched threshold runs and 15 false alerts for the model, versus 13 matches and 8 false alerts for trailing mean. The 18 runs are correlated crossings in only three test recordings. Only one of the three first onsets receives a valid advance learned warning. Integrate the learned forecast as an identifiable demonstration with baseline options, not as a proven field warning/control system. Keep site-control outcomes separate and simulated. Full evidence is in `reports/evaluation/` and `models/model-card.md`.
+
+## D011 — Finish the remaining software today and record the team
+
+Date: 1 October 2026. Status: directly requested by the user. Complete I1, S1, W1 and the software/offline presentation package today, proceeding through verification gates. This replaces the earlier 2 October implementation window; the deadline does not authorize invented evidence or hardware.
+
+The user supplied team name CTRL_V and four members: Md. Arif Shekh, Din Muhammad Rezwoan, Md. Meherab Hossain Talukder and Sowad Hossain. Organizers have not supplied a Team ID; show that status, not a fabricated ID. Contact details and qualification/feedback are not supplied. Store exact approved display details in `configs/team.json`.

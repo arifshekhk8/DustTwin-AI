@@ -1,6 +1,6 @@
 # Model and software prototype architecture
 
-This remains the integration contract. Preparation, the trained artifact and its evaluation are complete; API/replay, website and site control remain to be implemented.
+Preparation, the trained artifact/evaluation and local API/recorded replay are complete. Website and site control remain to be implemented. [The implemented inference contract](inference.md) specifies exact prepared snapshots and tests.
 
 ## Components and data flow
 
