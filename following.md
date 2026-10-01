@@ -1,6 +1,6 @@
 # Continue from here
 
-Last updated: 1 October 2026, Asia/Dhaka, after the first manual implementation session. Read this file with `AGENTS.md`, `plan.md` and `docs/decisions.md` before editing.
+Last updated: 1 October 2026, Asia/Dhaka, during the first scheduled continuation. Read this file with `AGENTS.md`, `plan.md` and `docs/decisions.md` before editing.
 
 ## Repository and scope
 
@@ -11,9 +11,9 @@ Last updated: 1 October 2026, Asia/Dhaka, after the first manual implementation 
 
 ## Current state
 
-**P0 and D1 are complete. D2 is next.** The initial construction workbook was downloaded and rejected for raw forecasting. A newer raw laboratory dataset is downloaded, audited and accepted. Task and partition rules are frozen. No model has been trained. No model accuracy or water saving has been demonstrated. No inference service or website exists in this new repository yet.
+**P0, D1 and D2 are complete. M1 is next.** The accepted raw task has causal preparation, fixed features, checksum-verified arrays and validation baseline errors. No learned model has been trained or final test model error computed. No water saving has been demonstrated. No inference service or website exists in this new repository yet.
 
-D2 preparation/baselines, M1 training, M2 final evaluation, I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete. D2 has its configuration but no implementation. No final model test error has been computed.
+M1 training, M2 final evaluation, I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete.
 
 ## Accepted data and frozen choices
 
@@ -51,14 +51,19 @@ The local `.venv` uses Python 3.14.6. Exact dependencies are in `requirements-au
 
 Both completed downloads and cached reruns passed their published hash checks. Originals are unchanged. Direct checks passed for raw-column selection, known OLE-date conversion, time-only parsing, 53,717 lab rows, the 56-file inventory and twelve disjoint partitioned lab recordings. All inspected pollutant/context fields were finite and populated; no negative PM was found. Both plots were visually inspected. Links and whitespace passed. These are D1 quality checks, not trained-model tests.
 
-## Exact next task: D2 causal preparation
+## First daily run: completed D2
 
-1. Check `git status --short`, recent history and `origin/main`. Read D008, the task configuration, evaluation protocol and parser. Reuse the completed audit; do not restart source selection.
-2. Implement `src/dusttwin/preparation.py` and `scripts/prepare_data.py`. Use per-recording elapsed clocks, deterministic duplicate handling and causal one-second snapshots. Preserve contributing observation time/age. Never interpolate from future readings.
-3. Build 121-snapshot histories and 30-second targets only where all required snapshots pass freshness. Record window exclusions/reasons. Keep group assignments fixed; put bulk prepared arrays under ignored `data/processed/`.
-4. Add focused checks for future leakage, exact target time, duplicate handling, stale gaps and recording/partition separation. Verify them before training.
-5. Produce persistence and preceding-60-second trailing-mean predictions on identical eligible samples. Publish validation baseline metrics and prepared split counts/manifests. Keep final test model errors for M2; do not tune against them.
-6. Commit/push verified D2 and refresh this file. Then advance to M1: pin model dependencies, train planned ridge/small gradient-tree candidates, choose on validation, save/reload the artifact and measure actual M4 training time.
+Added shared causal preparation, sixteen frozen PM10 features, prepared partitions and per-recording grids retaining contributing native observation times/ages/row indices. Removed eighteen duplicate rows. Prepared 24,818 training, 12,113 validation and 15,065 test windows. No remaining candidate window fails freshness. See `docs/preparation.md` and `reports/preparation/split-manifest.json`.
+
+Six focused tests passed. Independent native-file verification passed for all 51,996 windows. Validation persistence MAE/RMSE: 150.493/392.608 µg/m³; trailing mean: 132.725/407.965 µg/m³. No final test model errors inspected. Model libraries were installed successfully; exact versions must be saved before fitting.
+
+## Exact next task: M1 training
+
+1. Inspect worktree/remote; preserve concurrent work. Read the frozen task/features, `docs/evaluation.md` and D2 evidence. Do not change partitions or tune against final test.
+2. Pin installed dependencies and freeze the seven-candidate grid, seed, output clipping and all fixed parameters before fitting. Ridge alphas 0.1/1/10; small histogram gradient trees with depth 2/3 and 50/100 iterations, no random early-stopping holdout.
+3. Fit preprocessing on training only. Compare all candidates and both baselines on validation, choose by MAE then RMSE/simplicity. Record actual local fit timings.
+4. Save a trusted local artifact, schema/config hashes, validation metrics and a fixed prediction fixture. Reload it in a fresh process and verify predictions. Publish verified M1 and refresh this handover.
+5. Advance M2 only with the selected artifact frozen: evaluate final test once, preserve all baseline errors, per-recording results and honest plots/model card. No test-driven retraining. Integration follows M2.
 
 ## Remaining dependencies and limits
 
@@ -71,8 +76,8 @@ Both completed downloads and cached reruns passed their published hash checks. O
 
 The original review is `/Users/arif/Documents/Techfest, IIT Bombay/DustTwin_Review.md`, at source commit `dbb7386e384827fbae7e4571357d2491f4103fdf`. Its heuristic-engine results and 26 tests do not verify this new project.
 
-The app previously confirmed ACTIVE daily continuation `continue-dusttwin-daily` at 09:00 Asia/Dhaka, targeting chat `01a0da1e-d23f-7c61-8109-073351b29767`. This session was manual; no scheduled run has completed in the recorded history. The computer and Codex app must be running. The next run starts with D2, verifies progress, commits/pushes and refreshes this handover.
+The app confirmed ACTIVE daily continuation `continue-dusttwin-daily` at 09:00 Asia/Dhaka, targeting chat `01a0da1e-d23f-7c61-8109-073351b29767`. The first scheduled run on 1 October is in progress and has completed D2. The computer and Codex app must be running. Resume the first incomplete milestone recorded above.
 
 ## Git verification
 
-All five D1 milestones were confirmed on GitHub through `ef42ae3`. Source hashes, document links and whitespace passed. Bulk data and the environment are untracked. Publish this checkpoint, then verify clean worktree and local/`origin/main`/GitHub HEAD equality before ending. If a push fails, record it as pending.
+D1 and its checkpoint were confirmed on GitHub through `444c624`. D2 tests, source/array hashes and whitespace passed. Bulk data and the environment are ignored. Publish the D2 milestone, then confirm local/`origin/main`/GitHub HEAD equality. If a push fails, record it as pending.

@@ -6,7 +6,7 @@ For InnovateX Round 1, the project will combine a trained particulate-matter for
 
 ## Current status
 
-Planning and the first dataset audit are complete. The initial 2020 workbook was rejected for raw forecasting because it contains ten-minute moving averages. A newer verified dataset supplies twelve raw laboratory OPC-N3 recordings with 53,717 rows, accepted for a preliminary 30-second PM10 forecast. Causal preparation and model training are next. Inference services and the website have not been implemented here.
+Planning, the dataset audit and causal preparation are complete. Twelve raw laboratory OPC-N3 recordings supply 51,996 eligible forecast windows, held out by whole experiment group. Validation baselines are published; model training is next. Inference services and the website have not been implemented here. This is a preliminary laboratory PM10 forecast, with a separate planned site-control simulation.
 
 ## Start here
 
@@ -16,6 +16,7 @@ Planning and the first dataset audit are complete. The initial 2020 workbook was
 - [Dataset shortlist](docs/dataset-shortlist.md): primary sources and suitability checks.
 - [Dataset audit](docs/dataset-audit.md): downloaded-file findings and quality plots.
 - [Forecast task](configs/forecast-task.json): accepted signal, clock, freshness and group assignments.
+- [Causal preparation](docs/preparation.md): exact features, eligible windows, provenance and validation baselines.
 - [Evaluation protocol](docs/evaluation.md): frozen task and evaluation gates.
 - [Architecture](docs/architecture.md): model, API, replay and site-control boundaries.
 - [Round 1 checklist](docs/round1-checklist.md): presentation readiness.
@@ -36,7 +37,15 @@ python3 -m venv .venv
 .venv/bin/python scripts/audit_raw_profiles.py
 ```
 
-Original downloads are ignored by Git. Source versions, filenames and verified SHA-256 hashes are recorded in [the manifest](data/manifest.json). Small aggregate audit outputs and derived plots are committed. No trained-model metrics exist yet.
+Original downloads and bulk prepared arrays are ignored by Git. Source versions, filenames and verified SHA-256 hashes are recorded in [the manifest](data/manifest.json). Small aggregate audit outputs and derived plots are committed. No trained-model metrics exist yet.
+
+Prepare and verify the frozen forecast task:
+
+```sh
+.venv/bin/python scripts/prepare_data.py
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python scripts/verify_preparation.py
+```
 
 ## Dataset attribution
 
