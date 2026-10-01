@@ -71,3 +71,7 @@ The original website executes the frozen artifact through the local Python servi
 Date: 1 October 2026. Status: explicitly requested by the user. Create the public `arifshekhk8/DustTwin-Model-Integration` repository with all model/backend files and connection instructions for the teammate's existing frontend. Include the small verified model directly in Git so cloning is sufficient for artifact acquisition. Preserve the frozen model, measured evidence and dataset attribution; add explicit browser-origin settings and tested original integration examples. Do not import or replace the teammate's frontend design.
 
 The handoff is published and verified from a fresh clone. Backend hosting and connecting the teammate's own components remain the team's integration steps; repository creation does not deploy the API. The existing daily continuation is retained without a duplicate automation. This does not change the Round 1 software scope or authorize hardware.
+
+## D014 — Stop automatic daily continuation
+
+Date: 1 October 2026. Status: explicitly requested by the user after the repository completion checkpoint. Set `continue-dusttwin-daily` to PAUSED through the app, preserving its saved configuration. The app response and automation file both confirm PAUSED. No further scheduled continuation should run; resume only when the user requests it. This supersedes D006's active scheduling instruction and does not prevent manually requested work.
