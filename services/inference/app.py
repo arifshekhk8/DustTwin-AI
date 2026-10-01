@@ -15,6 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from dusttwin.inference import InferenceEngine, PredictionRequest
 from dusttwin.model import ForecastModel
 from dusttwin.replay import ReplayStore
+from dusttwin.scenario_store import ScenarioStore, SimulationRequest
 
 
 def create_app(root: Path = ROOT, load_model: bool = True) -> FastAPI:
@@ -30,6 +31,7 @@ def create_app(root: Path = ROOT, load_model: bool = True) -> FastAPI:
         else:
             app.state.model_error = "Live model intentionally unavailable"
         app.state.replay = ReplayStore(root)
+        app.state.scenarios = ScenarioStore(root) if (root / "demo/simulation/index.json").exists() else None
         yield
 
     app = FastAPI(title="DustTwin", version="1.0.0", lifespan=lifespan, docs_url=None, redoc_url=None)
@@ -72,6 +74,28 @@ def create_app(root: Path = ROOT, load_model: bool = True) -> FastAPI:
         return {"metadata": json.loads((root / "models/model-metadata.json").read_text()),
                 "test": json.loads((root / "reports/evaluation/test-metrics.json").read_text()),
                 "training": json.loads((root / "reports/training/validation-selection.json").read_text())}
+
+    @app.get("/v1/scenarios")
+    def scenarios():
+        if app.state.scenarios is None:
+            raise HTTPException(503, "Simulation evidence unavailable")
+        return app.state.scenarios.index
+
+    @app.get("/v1/scenarios/{scenario_id}")
+    def scenario(scenario_id: str):
+        try:
+            return app.state.scenarios.saved(scenario_id)
+        except KeyError as error:
+            raise HTTPException(404, str(error)) from error
+        except ValueError as error:
+            raise HTTPException(503, str(error)) from error
+
+    @app.post("/v1/simulate")
+    def simulate(request: SimulationRequest):
+        if app.state.engine is None:
+            raise HTTPException(503, "Changing assumptions needs the trained model; saved scenarios remain available")
+        with app.state.engine.lock:
+            return app.state.scenarios.run(request, app.state.engine.model)
 
     app.mount("/demo", StaticFiles(directory=root / "demo"), name="demo")
     app.mount("/reports", StaticFiles(directory=root / "reports"), name="reports")

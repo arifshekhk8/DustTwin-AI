@@ -11,9 +11,9 @@ Last updated: 1 October 2026, 10:19 Asia/Dhaka, after D2–M2 and release verifi
 
 ## Current state
 
-**P0 through I1 are complete. S1 is next.** The local service uses the frozen artifact; validation/test replay and labelled saved fallback exist. Fifteen Python tests pass, including five fixture/API matches, causal validation and delayed target reveal. The user requires all remaining software work today (D011). No simulated water saving has been computed yet; the website is next after S1.
+**P0 through S1 are complete. W1 is next.** The local service, measured replay and common site simulation exist. Twenty Python tests pass; all twenty scenario/controller runs have independently verified trace-derived metrics. The user requires all remaining software work today (D011). Website, browser agreement and offline presentation still need completion.
 
-S1 simulation, W1 website and J1 presentation remain incomplete. Keep measured forecasting separate from simulated site control throughout these remaining milestones.
+W1 website and J1 presentation remain incomplete. Keep measured forecasting separate from simulated site control throughout these remaining milestones.
 
 ## Accepted data and frozen choices
 
@@ -89,9 +89,17 @@ The team is CTRL_V with the four user-supplied names in `configs/team.json`. Tea
 4. Check exact agreement between the saved fixture/shared history inference and API, plus missing/stale data, malformed/nonfinite inputs, wrong task/units/horizon and future timestamps. Save an attributed local replay/evidence fixture for offline use. Do not claim browser agreement until a browser interface exists.
 5. Commit/push verified I1 and update this handover. Then S1 shared strategy simulation, W1 original React/TypeScript interface and J1 offline ten-minute rehearsal. Read the reference review for known water/ambient/zone/switching defects; derive simulation numbers from traces.
 
-## Exact next task: S1 shared strategy experiment
+## S1 completed in the follow-up session
+
+Implemented one common site plant, four controllers and five frozen cases. The predictor uses only observed past synthetic source-proxy readings; spatial mapping and the endpoint-to-trajectory method are explicit simulation assumptions. Background is preserved; wind-from conversion, two-edge risk, equal actuator timing and dropout fallback are implemented. Twenty tests pass, plus independent checks of all 9,600 intervals. Read `docs/simulation.md` for full mixed results. Predictive uses more water than reactive in the higher-risk cases; continuous has lower mean concentration and much greater water use. No physical effectiveness claim.
+
+## Earlier S1 handover (completed)
 
 Implement one common transport/actuator runner, no-control/continuous/reactive/predictive controllers, identical plant/nozzle assumptions, A=north/B=east/C=south/D=west, meteorological wind-from conversion, preserved background and equal switching limits. Predictive control may use only past source-proxy readings and the frozen artifact; spatial mapping and endpoint-to-trajectory assumptions must be explicit simulation assumptions. Freeze low-risk, east, diagonal, wind-shift and data-loss cases. Export all controller traces and derive every metric from them; verify determinism, water, ambient floor, risk coverage, unavailable input and ETA states. Then build W1 and J1 today.
+
+## Exact next task: W1 original interface, then J1 today
+
+Build the original React/TypeScript website in `apps/web/` with overview, measured replay, site experiment, honest results, proposed Round 2 hardware, CTRL_V team and presentation. Dependencies are installed/pinned with zero reported vulnerabilities. Consume the shared API; provide labelled saved replay/scenario fallback. Verify browser/API/fixture agreement, stale-response protection, pause/reset/speed/seek, custom assumptions and mobile layout. Then export the ten-minute presentation/evidence, cost basis and offline archive; rehearse without external requests, tag/release and push the final handover.
 
 ## Remaining dependencies and limits
 
