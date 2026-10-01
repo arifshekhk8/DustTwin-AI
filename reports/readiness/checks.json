@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-01",
+  "python_tests": 20,
+  "browser_journeys": 5,
+  "browser_last_run_seconds": 8.4,
+  "fixture_predictions": 5,
+  "fixture_absolute_tolerance": 1e-08,
+  "simulation_runs": 20,
+  "simulation_intervals": 9600,
+  "production_build": "TypeScript and Vite passed",
+  "pdf_pages": 7,
+  "pdf_visual_review": "All seven pages rendered and visually inspected; no clipping/overlap",
+  "browser_scope": [
+    "shared API/display and fixed-fixture agreement",
+    "future actual hidden until target time",
+    "pause/reset/speed/seek",
+    "superseded response and unavailable-service recovery",
+    "diagonal risk and data-loss fallback",
+    "custom flow applies to all four strategies",
+    "standalone saved/live agreement; custom controls disabled without model",
+    "all pages/local assets/presentation keys; 390 px mobile layout"
+  ],
+  "human_pitch_rehearsal": "Pending team practice; not part of automated verification"
+}

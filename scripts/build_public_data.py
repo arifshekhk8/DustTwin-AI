@@ -23,6 +23,9 @@ def main() -> None:
     for relative in ("models/model-card.md", "docs/simulation.md", "docs/inference.md", "docs/feasibility.md", "docs/judge-script.md", "docs/offline-demo.md"):
         if (ROOT / relative).exists():
             shutil.copyfile(ROOT / relative, documents / Path(relative).name)
+    packet = ROOT / "output/pdf/dusttwin-judge-packet.pdf"
+    if packet.exists():
+        shutil.copyfile(packet, documents / packet.name)
     print("Staged approved team, frozen evidence and available documents for local/static use.")
 
 

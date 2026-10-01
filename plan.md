@@ -1,6 +1,6 @@
 # DustTwin project plan
 
-Version 1.2. Created and updated 1 October 2026. All work dates use Asia/Dhaka.
+Version 1.3. Created and updated 1 October 2026. All work dates use Asia/Dhaka.
 
 ## Objective and scope
 
@@ -39,7 +39,7 @@ The accepted task demonstrates a laboratory monitor forecast. Missing calendar d
 
 D1–M2 precede claims of model accuracy. I1 may be scaffolded after the API contract is frozen, but a model placeholder must remain labelled. S1 and W1 must use the final traces and saved artifact before the demo is considered integrated.
 
-**Actual completion, 1 October:** P0, D1, D2, M1 and M2 pass their gates. The trained model is frozen; final MAE is 88.405 µg/m³ versus persistence 95.702 and trailing mean 81.565. Warning performance has material false alerts and first-onset misses. This mixed result is preserved in [the model card](models/model-card.md). I1, S1, W1 and J1 remain incomplete.
+**Actual completion, 1 October:** P0, D1, D2, M1 and M2 pass their gates. The trained model is frozen; final MAE is 88.405 µg/m³ versus persistence 95.702 and trailing mean 81.565. Warning performance has material false alerts and first-onset misses. This mixed result is preserved in [the model card](models/model-card.md). I1, S1 and W1 pass their integration gates. J1 documents, seven-page PDF, sourced cost basis and 600-second offline software rehearsal are complete; release archive/fresh-unpack verification is the final packaging gate. Human spoken rehearsal remains for the team.
 
 ## Schedule before the first round
 
@@ -52,12 +52,16 @@ These are planned completion windows, not guarantees. Advance by milestone gates
 3. Completed in the first scheduled run: causal preparation, whole-group partitions and two baselines; all 51,996 prepared windows pass provenance/causality checks.
 4. Completed: seven-candidate training, selected artifact/reload and final held-out evaluation. Small CPU fits on M4 took 0.2133 seconds total, excluding imports. Mixed baseline/warning results are documented without test tuning.
 
+### Remaining work on 1 October / user deadline
+
+5. Completed today: validated inference, six measured replay recordings, four common controllers and five frozen scenarios.
+6. Completed today: original seven-page website, live/saved fallback, mobile layout and browser/API/fixture checks.
+7. Completed today: sourced indicative costs, ten-minute story, seven-page PDF and actual 600-second offline software journey.
+8. Final packaging: verify the unpacked offline archive and clean live environment; publish the tagged demo and checkpoint. Hardware remains deferred; formal quotes and the human spoken pitch are not manufactured.
+
 ### 2 October
 
-1. Held-out evaluation and model card are already complete. Verify the frozen artifact/evidence, then advance I1.
-2. Connect actual inference and measured-data replay to the website, keeping learned and baseline options visible.
-3. Repair the shared strategy runner, timing and labels; derive results from saved traces.
-4. Prepare offline replay, cost/deployment assumptions and rehearse the ten-minute story.
+All software work is being completed on 1 October under D011. Check the frozen release on the presentation laptop, practice the spoken pitch with the team and fix only an actual reproducibility/usability problem. Daily continuation should stay quiet if there is no meaningful authorized task.
 
 ### 3 October
 
@@ -121,4 +125,4 @@ At session start read `AGENTS.md`, `following.md`, this plan and recent Git hist
 - Multiple meaningful planning commits are pushed and verified.
 - Daily continuation is active at 09:00 Asia/Dhaka, with its result recorded.
 
-References and dataset facts are documented in the linked shortlist. Actual model results are in `reports/training/`, `reports/evaluation/` and `models/model-card.md`. Simulated control metrics remain unavailable until S1.
+References and dataset facts are documented in the linked shortlist. Actual model results are in `reports/training/`, `reports/evaluation/` and `models/model-card.md`. Simulated control metrics are published in `reports/simulation/` and remain separate from measured forecasting errors.

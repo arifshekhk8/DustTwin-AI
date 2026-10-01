@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "elapsed_seconds": 600.001986333,
+  "external_network": "All non-loopback browser requests denied; physical Wi-Fi was not switched off",
+  "external_requests_attempted": [],
+  "page_errors": [],
+  "phases": [
+    {
+      "name": "overview",
+      "elapsed_seconds": 0.14254816700000003
+    },
+    {
+      "name": "measured-inputs",
+      "elapsed_seconds": 45.184740292
+    },
+    {
+      "name": "revealed-actual",
+      "elapsed_seconds": 105.132686833
+    },
+    {
+      "name": "honest-results",
+      "elapsed_seconds": 195.126883458
+    },
+    {
+      "name": "diagonal-control",
+      "elapsed_seconds": 255.449508875
+    },
+    {
+      "name": "wind-change",
+      "elapsed_seconds": 345.08258691699996
+    },
+    {
+      "name": "sensor-loss",
+      "elapsed_seconds": 405.280261292
+    },
+    {
+      "name": "pilot-and-economics",
+      "elapsed_seconds": 435.091673125
+    },
+    {
+      "name": "team-and-presentation",
+      "elapsed_seconds": 510.12059375
+    },
+    {
+      "name": "saved-only-backup",
+      "elapsed_seconds": 555.1858255000001
+    }
+  ],
+  "human_pitch": "Not rehearsed by this automated software check",
+  "date": "2026-10-01",
+  "tested_build_parent": "d4ff437",
+  "note": "Timed check used the W1 build. Subsequent cost/document packaging and health fallback labels are covered by final browser checks."
+}

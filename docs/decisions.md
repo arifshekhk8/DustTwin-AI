@@ -59,3 +59,9 @@ The predeclared warning experiment yields 13 matched threshold runs and 15 false
 Date: 1 October 2026. Status: directly requested by the user. Complete I1, S1, W1 and the software/offline presentation package today, proceeding through verification gates. This replaces the earlier 2 October implementation window; the deadline does not authorize invented evidence or hardware.
 
 The user supplied team name CTRL_V and four members: Md. Arif Shekh, Din Muhammad Rezwoan, Md. Meherab Hossain Talukder and Sowad Hossain. Organizers have not supplied a Team ID; show that status, not a fabricated ID. Contact details and qualification/feedback are not supplied. Store exact approved display details in `configs/team.json`.
+
+## D012 — Round 1 cost evidence and recovery scope
+
+Date: 1 October 2026. Status: implemented within the authorized software scope. Use dated, cited public component listings as an indicative Round 1 worksheet, with stock/specification gaps and unpriced costs visible. Formal supplier quotes and a pressure/range-appropriate physical design remain Round 2 dependencies. Neither a partial subtotal nor simulated eight-minute consumption is a complete installed cost or field saving. The lower-cost candidate monitor differs from training OPC-N3; range and response prevent direct interchangeability.
+
+The original website executes the frozen artifact through the local Python service; the standalone offline backup is explicitly saved inference and cannot rerun assumptions. A real ten-minute automated journey denied external browser requests and passed; physical Wi-Fi and the human spoken pitch were not tested. Record fresh-environment, archive and release checks separately.

@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-01",
+  "python": "3.14.6",
+  "environment": "Fresh virtual environment under ignored tmp/live-setup-check; installed pinned requirements-service.txt",
+  "pip_check": "No broken requirements found",
+  "model_fixture_predictions": 5,
+  "absolute_tolerance": 1e-08,
+  "artifact_sha256": "d78f1b37269f72af45933e01722968fb13ed82178f6d8b3e4c5584d46cec09c7",
+  "requirements_sha256": "09553f715affd881d6fab39957de639df9b245c022b4f865bdfa43824a82c259",
+  "platform_scope": "Verified on this Apple M4/macOS only. No Windows/Linux live-runtime claim."
+}

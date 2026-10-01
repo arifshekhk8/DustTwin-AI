@@ -1,50 +1,50 @@
 # Round 1 demonstration and readiness
 
-This checklist is a delivery gate. No item below has been completed by writing this document. The supplied competition material describes a ten-minute presentation and a team limit of four. Confirm the registered team's current organizer instructions before the event.
+This checklist is a delivery gate. Status updated from actual implementation/verification on 1 October 2026; supporting reports are in `reports/readiness/`. The supplied competition material describes a ten-minute presentation and a team limit of four. Confirm the registered team's current organizer instructions before the event.
 
 ## Ten-minute presentation
 
 | Time | Show | Evidence required |
 |---|---|---|
-| 0:00–1:15 | Construction dust problem and a specific local context | Attributed local example; avoid unsupported health or citywide-impact claims |
-| 1:15–2:00 | Current control approaches and the proposed contribution | Explain forecast-guided zone selection and the exposure/water tradeoff |
-| 2:00–3:00 | Data, target and model | Actual source, monitor, horizon, split and limitations |
-| 3:00–5:00 | Recorded-data replay | Past inputs, trained forecast, persistence and later actual readings; model/artifact identity visible |
-| 5:00–6:30 | Site-control scenario | Wind convention, boundary selection, commands and common environment for all strategies |
-| 6:30–7:30 | Results | Held-out model errors and separately labelled simulated water/exposure results |
-| 7:30–8:30 | Deployment and economics | Proposed hardware architecture, cost basis, water/power assumptions and maintenance |
-| 8:30–9:30 | Limitations and Round 2 validation | Dataset coverage, sensor calibration, mist/humidity effects and physical pilot plan |
-| 9:30–10:00 | Summary and team | Completed software prototype, actual registered team and next validation step |
+| 0:00–0:45 | Introduce CTRL_V and the software prototype | Round 1 scope, no physical hardware claim |
+| 0:45–1:45 | Local problem, existing approaches and contribution | World Bank context; continuous/reactive comparison |
+| 1:45–2:45 | Data, target and model | Actual source, monitor, horizon, group split and limits |
+| 2:45–4:15 | Measured-data replay | Past inputs, trained forecast, both baselines and later actual |
+| 4:15–5:15 | Held-out results | Mixed errors, false alerts and onset failures |
+| 5:15–6:45 | Site-control replay | Wind convention, diagonal risk, commands and equal plant |
+| 6:45–7:45 | Water/exposure tradeoff | Saved eight-minute metrics and clear simulation assumptions |
+| 7:45–9:00 | Deployment, economics and pilot gates | Dated listing basis, quote gaps, calibration and hardware deferral |
+| 9:00–10:00 | Summary and team | Completed software, four approved members and validation next step |
 
 Do not let a slow demo consume the evidence section. Prepare a short saved replay of the same verified session for recovery.
 
 ## Model and data gates
 
-- [ ] Raw files acquired with source/version, reuse terms and hashes recorded.
-- [ ] Audit supports the selected pollutant, cadence, monitor and forecast horizon.
-- [ ] Causal preparation and chronological partitions are frozen before training.
-- [ ] A saved learned artifact loads and reproduces the recorded predictions.
-- [ ] Held-out MAE and RMSE include persistence and trailing-average comparisons on identical samples.
-- [ ] Model card reports sample/episode counts, failures and the limits of a short experiment.
-- [ ] No model improvement is claimed unless the measurements support it; a weaker model result is disclosed.
+- [x] Raw files acquired with source/version, reuse terms and hashes recorded.
+- [x] Audit supports the selected pollutant, cadence, monitor and forecast horizon.
+- [x] Causal preparation and whole-group partitions are frozen before training; within-record clocks are ordered, strict global chronology is not claimed (D008).
+- [x] A saved learned artifact loads and reproduces the recorded predictions.
+- [x] Held-out MAE and RMSE include persistence and trailing-average comparisons on identical samples.
+- [x] Model card reports sample/episode counts, failures and the limits of a short experiment.
+- [x] No model improvement is claimed unless the measurements support it; a weaker model result is disclosed.
 
 ## Website and simulation gates
 
-- [ ] One known input produces matching evaluation, API and browser predictions.
-- [ ] Measured observations, learned predictions and simulated outcomes have clear labels and units.
-- [ ] Replay only exposes observations as its clock advances; future targets are unavailable to controllers.
-- [ ] Reset reproduces the same trace; pause and speed controls preserve the time accounting.
-- [ ] No control, continuous, reactive and predictive strategies share source/weather events and actuator limits.
-- [ ] Water is integrated from active flow and time; concentrations and switching counts come from traces.
-- [ ] Background concentration is preserved when suppressing construction contribution.
-- [ ] Crossing displays distinguish already exceeded, future crossing and no crossing within the horizon.
-- [ ] Low risk, eastward travel, diagonal exposure, wind change and data loss are checked.
-- [ ] Results pages contain computed values and identify the scenario, time window and assumptions.
-- [ ] Physical diagrams and sensors are labelled as proposed Round 2 hardware.
+- [x] One known input produces matching evaluation, API and browser predictions.
+- [x] Measured observations, learned predictions and simulated outcomes have clear labels and units.
+- [x] Replay only exposes observations as its clock advances; future targets are unavailable to controllers.
+- [x] Reset reproduces the same trace; pause and speed controls preserve the time accounting.
+- [x] No control, continuous, reactive and predictive strategies share source/weather events and actuator limits.
+- [x] Water is integrated from active flow and time; concentrations and switching counts come from traces.
+- [x] Background concentration is preserved when suppressing construction contribution.
+- [x] Crossing displays distinguish already exceeded, future crossing and no crossing within the horizon.
+- [x] Low risk, eastward travel, diagonal exposure, wind change and data loss are checked.
+- [x] Results pages contain computed values and identify the scenario, time window and assumptions.
+- [x] Physical diagrams and sensors are labelled as proposed Round 2 hardware.
 
 ## Proposed economics worksheet
 
-Build `docs/feasibility.md` during implementation. Obtain dated supplier quotations before filling prices; the table below contains planning quantities, not a purchased bill of materials. Compare a minimal pilot with the eventual site configuration.
+Build `docs/feasibility.md` during implementation. Dated supplier listings support indicative Round 1 costs; obtain formal quotations before procurement (D012). the table below contains planning quantities, not a purchased bill of materials. Compare a minimal pilot with the eventual site configuration.
 
 | Item | Initial quantity basis | Evidence to obtain |
 |---|---|---|
@@ -59,14 +59,15 @@ Estimate water as the sum of zone flow × active duration, with units shown. Est
 
 ## Event and offline readiness
 
-- [ ] Team ID, Theme 2, actual member names (at most four) and approved contact details are supplied by the team.
-- [ ] Local construction context and source citations are included.
-- [ ] The accepted model, permitted replay data, website and service are available on the presentation laptop.
-- [ ] Setup instructions work from a fresh environment with pinned dependencies and artifact checksums.
-- [ ] The complete ten-minute rehearsal works with the external network disconnected.
-- [ ] A saved inference replay and screenshots/video are prepared as a labelled backup.
-- [ ] A working demo version is tagged with the actual artifact and data versions.
-- [ ] After the event, actual judge feedback and qualification status are recorded before starting hardware work.
+- [x] Approved CTRL_V/Theme 2/four-member display details are inserted. Team ID is labelled not issued; unprovided contacts are omitted.
+- [x] Local construction context and source citations are included.
+- [x] The accepted model, permitted replay data, website and service are available on the presentation laptop.
+- [x] Pinned Python packages installed in a clean local environment; five model fixture predictions and artifact checks passed. Unpacked release startup is the final packaging check.
+- [x] The 600-second software journey passes with all external browser requests denied. Physical Wi-Fi is not switched off; human spoken rehearsal is separate.
+- [x] A saved inference replay and screenshots/video are prepared as a labelled backup.
+- [ ] Final archive/fresh-unpack check and tagged release published with actual artifact/data versions (in progress).
+- [ ] Team practices spoken delivery and checks venue projection (team action).
+- [ ] After the event, record actual judge feedback/qualification only when supplied; hardware requires an explicit team instruction.
 
 ## Go/no-go decision
 

@@ -2,13 +2,23 @@
 
 DustTwin is a software prototype for forecasting construction dust and demonstrating how an urban construction site could select misting zones before dust reaches its perimeter.
 
-For InnovateX Round 1, the project will combine a trained particulate-matter forecasting model, replay of recorded data, an interactive site simulation and traceable strategy comparisons. Physical sensors and misting hardware belong to Round 2.
+For InnovateX Round 1, the project combines a trained particulate-matter forecasting model, replay of recorded data, an interactive site simulation and traceable strategy comparisons. Physical sensors and misting hardware belong to Round 2.
 
 ## Current status
 
 The data audit, causal preparation, model training and held-out evaluation are complete. The saved model predicts laboratory PM10 30 seconds ahead from two minutes of past readings. On 15,065 held-out windows, its MAE is **88.405 µg/m³**, compared with persistence **95.702** and trailing mean **81.565**. The learned model improves on persistence but loses to the trailing mean on MAE; warnings and abrupt-onset prediction remain weak. See the [model card](models/model-card.md) for full results and failures.
 
-The model is downloadable and verified locally. Inference service, website and separate site-control simulation are next. No field boundary accuracy, misting effectiveness or physical water savings have been demonstrated.
+The model, validated local inference service, original seven-page website and fair four-strategy/five-case simulation are implemented. Twenty Python tests, five browser journeys, all 9,600 simulation intervals and a real ten-minute software rehearsal with external browser requests denied pass. The seven-page judge packet is visually verified. No field boundary accuracy, misting effectiveness or physical water savings have been demonstrated.
+
+## Open the demonstration
+
+On the prepared Mac, double-click **Start DustTwin.command** and confirm **Local model ready**. It opens <http://127.0.0.1:8000> after the server is ready. Keep its terminal open.
+
+For a saved-only backup, use **Start Saved Replay.command** at <http://127.0.0.1:8001>. This mode shows previously computed predictions and traces; it does not execute the learned model or rerun assumptions.
+
+The [Round 1 release](https://github.com/arifshekhk8/DustTwin-AI/releases/tag/round1-demo-v1) includes the ready-built offline archive, frozen model, evidence and PDF. See [offline instructions](docs/offline-demo.md) for another computer or a source checkout. Saved mode needs only Python 3 and a modern browser. Live mode requires Python 3.14 and the pinned service packages installed once. No internet or Node is needed during the prepared demonstration.
+
+The website includes Overview, AI replay, Site experiment, Evidence & results, Round 2 design, Our team and Present. The user-supplied team is **CTRL_V**, Theme 2; all four approved names are displayed. Team ID is labelled not issued. The team must still practice spoken delivery and check venue projection; software checks do not verify a human presentation.
 
 ## Start here
 
@@ -24,10 +34,18 @@ The model is downloadable and verified locally. Inference service, website and s
 - [Evaluation protocol](docs/evaluation.md): frozen task and evaluation gates.
 - [Architecture](docs/architecture.md): model, API, replay and site-control boundaries.
 - [Round 1 checklist](docs/round1-checklist.md): presentation readiness.
+- [Website and browser checks](docs/website.md): build, playback and live/saved modes.
+- [Inference contract](docs/inference.md): validated causal input and API.
+- [Simulation evidence](docs/simulation.md): common plant, five cases and mixed results.
+- [Feasibility and costs](docs/feasibility.md): dated listings, missing quotes and pilot gates.
+- [Ten-minute judge script](docs/judge-script.md): timed story and likely questions.
+- [Judge PDF](output/pdf/dusttwin-judge-packet.pdf): printable evidence packet.
+- [Readiness reports](reports/readiness): actual checks and offline rehearsal scope.
+- [Third-party notices](docs/third-party-notices.md): redistributed frontend licenses.
 
 ## Reference frontend
 
-The existing [meherabmehu/DustTwin](https://github.com/meherabmehu/DustTwin) frontend was reviewed at `dbb7386e384827fbae7e4571357d2491f4103fdf`. This new repository starts with original project planning documents. Before importing that frontend, record permission to reuse its code or implement the required interface here using our own code. The source repository currently exposes no license.
+The existing [meherabmehu/DustTwin](https://github.com/meherabmehu/DustTwin) frontend was reviewed at `dbb7386e384827fbae7e4571357d2491f4103fdf`. This repository implements its own original interface; no reference source was imported because a reuse license was not recorded.
 
 ## Reproduce the data audit
 

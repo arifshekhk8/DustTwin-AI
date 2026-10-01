@@ -25,7 +25,7 @@ Open <http://127.0.0.1:8000>. The built interface is served by the model API. Fo
 
 ## Verification
 
-Run both local servers above, then `cd apps/web && npm run test:e2e`. Five browser checks cover the five fixture predictions to absolute tolerance 1e-8, shared API/display agreement, target reveal, speed/pause/reset/seek, deliberately delayed stale response, diagonal A+B commands, sensor loss, custom flow for every strategy, saved/live agreement, disabled fallback controls, all pages, local assets, presentation keys and 390-pixel mobile layout. External requests are denied in the fixture, static fallback and full-page journeys.
+Run both local servers above, then `cd apps/web && npm run test:e2e`. Five browser checks cover the five fixture predictions to absolute tolerance 1e-8, shared API/display agreement, target reveal, speed/pause/reset/seek, deliberately delayed stale response, diagonal A+B commands, sensor loss, custom flow for every strategy, saved/live agreement, live-service failure/recovery labels, disabled fallback controls, all pages, local assets, presentation keys and 390-pixel mobile layout. External requests are denied in the fixture, static fallback and full-page journeys.
 
 Production TypeScript/Vite build passes. Desktop and mobile screenshots were inspected; footer icon sizing was corrected after visual review. An initial saved/live assertion used a hardcoded replay time instead of the selected recording clock; the check now reads the actual clock and passes. No artifact or evaluation metric was altered. Twenty Python tests and the simulation trace verifier remain separate gates.
 

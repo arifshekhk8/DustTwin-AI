@@ -20,4 +20,5 @@ data/processed/
 models/artifacts/
 runs/
 tmp/
+output/releases/
 *.log
