@@ -11,9 +11,9 @@ Last updated: 1 October 2026, Asia/Dhaka, during the first scheduled continuatio
 
 ## Current state
 
-**P0, D1 and D2 are complete. M1 is next.** The accepted raw task has causal preparation, fixed features, checksum-verified arrays and validation baseline errors. No learned model has been trained or final test model error computed. No water saving has been demonstrated. No inference service or website exists in this new repository yet.
+**P0, D1, D2 and M1 are complete. M2 is next.** The selected model is `hist_gb_depth3_iter100`, trained only on groups 1/2 and chosen using group 3 validation. Its saved artifact reloads and reproduces the fixture. No final test model error or water saving has been computed. No inference service or website exists in this new repository yet.
 
-M1 training, M2 final evaluation, I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete.
+M2 final evaluation, I1 integration, S1 simulation, W1 website and J1 presentation remain incomplete.
 
 ## Accepted data and frozen choices
 
@@ -57,13 +57,19 @@ Added shared causal preparation, sixteen frozen PM10 features, prepared partitio
 
 Six focused tests passed. Independent native-file verification passed for all 51,996 windows. Validation persistence MAE/RMSE: 150.493/392.608 µg/m³; trailing mean: 132.725/407.965 µg/m³. No final test model errors inspected. Model libraries were installed successfully; exact versions must be saved before fitting.
 
-## Exact next task: M1 training
+## First daily run: completed M1
 
-1. Inspect worktree/remote; preserve concurrent work. Read the frozen task/features, `docs/evaluation.md` and D2 evidence. Do not change partitions or tune against final test.
-2. Pin installed dependencies and freeze the seven-candidate grid, seed, output clipping and all fixed parameters before fitting. Ridge alphas 0.1/1/10; small histogram gradient trees with depth 2/3 and 50/100 iterations, no random early-stopping holdout.
-3. Fit preprocessing on training only. Compare all candidates and both baselines on validation, choose by MAE then RMSE/simplicity. Record actual local fit timings.
-4. Save a trusted local artifact, schema/config hashes, validation metrics and a fixed prediction fixture. Reload it in a fresh process and verify predictions. Publish verified M1 and refresh this handover.
-5. Advance M2 only with the selected artifact frozen: evaluate final test once, preserve all baseline errors, per-recording results and honest plots/model card. No test-driven retraining. Integration follows M2.
+Pinned `requirements-model.txt` and froze seven candidates plus descriptive event rules in `5050bb2` before fitting. Selected depth-3, 100-iteration histogram boosting by validation MAE (117.186 µg/m³; RMSE 305.217), versus persistence 150.493/392.608. Validation MAE improvement is 22.13%, not pollution reduction or final accuracy. All candidate/per-recording results and settings are in `reports/training/validation-selection.json`.
+
+The M4 used 0.2133 seconds for all seven fits and 0.3163 seconds for the run excluding imports. The 54,679-byte artifact is ignored at `models/artifacts/pm10-initial.joblib`; its SHA-256 is `d78f1b37269f72af45933e01722968fb13ed82178f6d8b3e4c5584d46cec09c7`. Metadata, dependency/config/source hashes and the fixed fixture are public. Fresh-process verification passed for feature and history inference. Training-only scaling and disabled random early stopping passed. No test error has been computed.
+
+## Exact next task: M2 frozen evaluation
+
+1. Inspect worktree/remote; preserve concurrent work. Read frozen task/features/training/demo-events, validation selection and model metadata. Do not change selection or refit with test.
+2. Evaluate the selected hash-verified artifact and both baselines on all 15,065 eligible group-4 samples once. Save complete forecast traces with issue/target/contributing observation times and freshness.
+3. Report pooled/per-recording MAE/RMSE, residuals, target range and failures. Run the predeclared threshold warning rules descriptively, disclosing small event counts. Preserve results if learned model loses.
+4. Verify metrics against exported traces and visually inspect plots. Write `models/model-card.md`. Publish M2 and a downloadable trusted artifact for reproducible/offline use.
+5. Advance I1 next: shared validated inference API and measured replay from the actual saved model, before site simulation or website claims. Read `docs/architecture.md` first.
 
 ## Remaining dependencies and limits
 

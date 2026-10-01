@@ -1,6 +1,6 @@
 # Forecast and control evaluation protocol
 
-Status: task and experiment-group partitions frozen after D1 audit on 1 October 2026. D2 causal preparation and validation baselines are complete; training and final model evaluation are next. The authoritative task configuration is `configs/forecast-task.json`; D008 records the dataset change. [Preparation evidence](preparation.md) defines exact features and counts.
+Status: task and experiment-group partitions frozen after D1 audit on 1 October 2026. D2 preparation and M1 training/reload checks are complete; final model evaluation is next. The authoritative task configuration is `configs/forecast-task.json`; D008 records the dataset change. [Preparation evidence](preparation.md) defines exact features/counts and [training evidence](training.md) records validation selection.
 
 ## First measured-data task
 
