@@ -65,3 +65,9 @@ The user supplied team name CTRL_V and four members: Md. Arif Shekh, Din Muhamma
 Date: 1 October 2026. Status: implemented within the authorized software scope. Use dated, cited public component listings as an indicative Round 1 worksheet, with stock/specification gaps and unpriced costs visible. Formal supplier quotes and a pressure/range-appropriate physical design remain Round 2 dependencies. Neither a partial subtotal nor simulated eight-minute consumption is a complete installed cost or field saving. The lower-cost candidate monitor differs from training OPC-N3; range and response prevent direct interchangeability.
 
 The original website executes the frozen artifact through the local Python service; the standalone offline backup is explicitly saved inference and cannot rerun assumptions. A real ten-minute automated journey denied external browser requests and passed; physical Wi-Fi and the human spoken pitch were not tested. Record fresh-environment, archive and release checks separately.
+
+## D013 — Publish a separate model integration handoff
+
+Date: 1 October 2026. Status: explicitly requested by the user. Create the public `arifshekhk8/DustTwin-Model-Integration` repository with all model/backend files and connection instructions for the teammate's existing frontend. Include the small verified model directly in Git so cloning is sufficient for artifact acquisition. Preserve the frozen model, measured evidence and dataset attribution; add explicit browser-origin settings and tested original integration examples. Do not import or replace the teammate's frontend design.
+
+The handoff is published and verified from a fresh clone. Backend hosting and connecting the teammate's own components remain the team's integration steps; repository creation does not deploy the API. The existing daily continuation is retained without a duplicate automation. This does not change the Round 1 software scope or authorize hardware.

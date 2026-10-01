@@ -55,6 +55,12 @@ Dated indicative five-monitor component listing subtotal: USD 369.00 plus BDT 34
 
 ## Exact next action / daily continuation
 
+### Teammate frontend handoff
+
+The user requested a separate public package for integrating the model into the team's existing `meherabmehu/DustTwin` frontend. Created <https://github.com/arifshekhk8/DustTwin-Model-Integration>, with the actual fitted model tracked directly, complete backend/evidence, explicit frontend-origin settings, browser/TypeScript adapter, optional React hook, sample input/output and integration guide. Three coherent handoff commits are pushed; final checkpoint `97a1d15`. A fresh GitHub clone and new pinned Python environment pass the five model fixtures, 23 Python tests, three adapter checks, TypeScript checks and three real cross-origin Chromium journeys. The optional React hook was type-checked; the teammate frontend itself was not edited/tested or deployed.
+
+For teammate integration work, read that repository's `AGENTS.md`, `following.md` and `docs/integration.md`, then inspect its worktree/remote. Its frozen model is unchanged from this project. The team next runs/hosts the backend and connects returned values to its own design. This handoff does not require new training or hardware. No duplicate daily automation was created; the upstream Round 1 release remains frozen.
+
 No unfinished Round 1 software milestone remains. First inspect the working tree and remote, then verify the existing release/launch on the presentation laptop. If there is no actual reproducibility, integration or usability issue, stay quiet and do not generate cosmetic or empty commits. Preserve the frozen release. Team action: practice `docs/judge-script.md` for ten minutes, check the projector and supply real organizer changes/feedback if any.
 
 The user-authorized ACTIVE heartbeat `continue-dusttwin-daily` runs at 09:00 Asia/Dhaka in this chat. The computer/app must be on. Do not pause it without the user's request. After the event, record qualification/feedback only when the team supplies it. New model research needs an untouched evaluation dataset/site; hardware needs an explicit team instruction.
