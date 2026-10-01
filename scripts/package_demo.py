@@ -25,6 +25,12 @@ def main():
     artifact = ROOT / "models/artifacts/pm10-initial.joblib"
     if not (dist / "index.html").exists() or not artifact.exists():
         raise SystemExit("Build the website and verify/download the pinned fitted artifact first.")
+    for directory in ("demo", "reports"):
+        for source in (ROOT / directory).rglob("*"):
+            if source.is_file():
+                staged = dist / source.relative_to(ROOT)
+                if not staged.is_file() or sha(staged) != sha(source):
+                    raise SystemExit(f"Static evidence is stale: {source.relative_to(ROOT)}. Rebuild apps/web before packaging.")
     metadata = json.loads((ROOT / "models/model-metadata.json").read_text())
     if sha(artifact) != metadata["artifact_sha256"]:
         raise SystemExit("Fitted artifact hash does not match frozen metadata.")
