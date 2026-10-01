@@ -1,0 +1,23 @@
+{
+  "team": {
+    "name": "CTRL_V",
+    "theme": "Theme 2",
+    "team_id": null,
+    "team_id_status": "Not issued by organizers, according to the team",
+    "members": [
+      "Md. Arif Shekh",
+      "Din Muhammad Rezwoan",
+      "Md. Meherab Hossain Talukder",
+      "Sowad Hossain"
+    ],
+    "contact": null,
+    "source": "Team details supplied directly by the user on 1 October 2026",
+    "qualification_status": "No qualification result or judge feedback supplied"
+  },
+  "build_parent_commit": "f3d702448f5e5593c7be757a881ed953b0d7783e",
+  "problem_source": {
+    "title": "World Bank: In Bangladesh, an urgent call for clean air",
+    "url": "https://blogs.worldbank.org/en/endpovertyinsouthasia/bangladesh-urgent-call-clean-air"
+  },
+  "costs": null
+}

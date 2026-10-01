@@ -11,9 +11,9 @@ Last updated: 1 October 2026, 10:19 Asia/Dhaka, after D2–M2 and release verifi
 
 ## Current state
 
-**P0 through S1 are complete. W1 is next.** The local service, measured replay and common site simulation exist. Twenty Python tests pass; all twenty scenario/controller runs have independently verified trace-derived metrics. The user requires all remaining software work today (D011). Website, browser agreement and offline presentation still need completion.
+**P0 through W1 are complete. J1 is next.** The local service, measured replay and common site simulation exist. Twenty Python tests pass; all twenty scenario/controller runs have independently verified trace-derived metrics. The user requires all remaining software work today (D011). Website, browser agreement and offline presentation still need completion.
 
-W1 website and J1 presentation remain incomplete. Keep measured forecasting separate from simulated site control throughout these remaining milestones.
+W1 now passes build and browser gates; J1 packaging and timed rehearsal are running. Keep measured forecasting separate from simulated site control throughout these remaining milestones.
 
 ## Accepted data and frozen choices
 
@@ -119,3 +119,9 @@ The app confirmed ACTIVE daily continuation `continue-dusttwin-daily` at 09:00 A
 D1 was verified through `444c624`; today's D2 (`9b04d27`), frozen fit rules (`5050bb2`), M1 (`435c93a`) and M2 (`6497074`) were committed/pushed with the configured author. No contribution trailers or empty commits. At 10:19 Dhaka, local HEAD, `origin/main` and GitHub API HEAD all equal `64970744b318d3b87fe3e5bd995ee290de8c6c93`, with a clean worktree before this handover edit. The public release is verified.
 
 Commit/push this final checkpoint and confirm equality/cleanliness again before ending. The final checkpoint hash is read from Git at the next session; it cannot be embedded in its own file. Bulk data, environment, temporary verification download and fitted binary remain ignored by ordinary Git. If the checkpoint push fails, record it as pending.
+
+## W1 completed today
+
+Original seven-page React/TypeScript dashboard built. Five Playwright journeys passed (8.1 seconds), including all five fixed fixture predictions to 1e-8, API/display agreement, clock-only actual reveal, delayed response rejection, playback, diagonal risk, dropout, changed flow and standalone saved fallback. All pages and 390-pixel mobile layouts pass; desktop/mobile screenshots were inspected and icon scaling repaired. Twenty Python tests and all 9,600 simulation intervals remain verified. Read `docs/website.md`.
+
+J1 next: finish sourced feasibility notes, ten-minute script, PDF evidence packet, verified offline archive and tagged release. The ten-minute software rehearsal is active with external browser requests denied. Do not call it passed until its result exists. Human spoken rehearsal remains for the team.

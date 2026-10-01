@@ -83,6 +83,8 @@ def create_app(root: Path = ROOT, load_model: bool = True) -> FastAPI:
 
     @app.get("/v1/scenarios/{scenario_id}")
     def scenario(scenario_id: str):
+        if app.state.scenarios is None:
+            raise HTTPException(503, "Simulation evidence unavailable")
         try:
             return app.state.scenarios.saved(scenario_id)
         except KeyError as error:
@@ -92,6 +94,8 @@ def create_app(root: Path = ROOT, load_model: bool = True) -> FastAPI:
 
     @app.post("/v1/simulate")
     def simulate(request: SimulationRequest):
+        if app.state.scenarios is None:
+            raise HTTPException(503, "Simulation evidence unavailable")
         if app.state.engine is None:
             raise HTTPException(503, "Changing assumptions needs the trained model; saved scenarios remain available")
         with app.state.engine.lock:

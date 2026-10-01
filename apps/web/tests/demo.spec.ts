@@ -1,0 +1,41 @@
+import {test,expect} from '@playwright/test';
+import type {Page} from '@playwright/test';
+async function seek(page:Page,label:string,second:number){await page.getByRole('slider',{name:label}).fill(String(second));}
+async function blockExternal(page:Page){await page.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.abort());}
+
+test('browser executes the fixed fixture and displays the shared API output',async({page})=>{
+  await blockExternal(page);await page.goto('/#replay');await page.getByLabel('Recording',{exact:true}).selectOption('lab_e3_drill10');
+  await expect(page.getByTestId('model-prediction')).toBeVisible();
+  const result=await page.evaluate(async()=>{const snapshot=await (await fetch('/v1/replay/lab_e3_drill10?second=120')).json();const evidence=await (await fetch('/demo/evidence.json')).json();const outputs=[];for(let i=0;i<5;i++){const request={...snapshot.request,history:evidence.fixture.history_pm10_ug_m3[i].map((pm10:number,t:number)=>({time_seconds:t,observation_time_seconds:t,pm10_ug_m3:pm10}))};outputs.push(await (await fetch('/v1/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request)})).json());}return {snapshot,evidence,outputs};});
+  result.outputs.forEach((output,i)=>expect(Math.abs(output.predicted_pm10_ug_m3-result.evidence.fixture.expected_predictions_ug_m3[i])).toBeLessThan(1e-8));
+  expect(result.snapshot.request.history).toHaveLength(121);expect(result.snapshot.forecast.artifact_sha256).toBe(result.evidence.metadata.artifact_sha256);
+  await expect(page.getByTestId('model-prediction')).toContainText(result.snapshot.forecast.predicted_pm10_ug_m3.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}));
+  await expect(page.getByTestId('matured-waiting')).toBeVisible();await seek(page,'Measured replay time',150);await expect(page.getByTestId('matured-result')).toContainText('02:00');
+});
+
+test('seek, speed, pause and reset preserve the recorded clock; late responses are discarded',async({page})=>{
+  await page.goto('/#replay');await page.getByLabel('Recording',{exact:true}).selectOption('lab_e3_drill10');await expect(page.getByTestId('model-prediction')).toBeVisible();
+  await page.getByLabel('Playback speed').selectOption('20');await page.getByRole('button',{name:'Play replay',exact:true}).click();await expect(page.getByRole('slider')).toHaveValue('140',{timeout:3500});await page.getByRole('button',{name:'Pause replay',exact:true}).click();const time=await page.getByRole('slider').inputValue();await page.waitForTimeout(1200);await expect(page.getByRole('slider')).toHaveValue(time);await page.getByRole('button',{name:'Reset replay'}).click();await expect(page.getByRole('slider')).toHaveValue('120');
+  await page.route('**/v1/replay/lab_e3_drill10?second=200',async route=>{const response=await route.fetch();await new Promise(resolve=>setTimeout(resolve,800));try{await route.fulfill({response});}catch{}});
+  await seek(page,'Measured replay time',200);await page.waitForTimeout(80);await seek(page,'Measured replay time',300);await expect(page.getByTestId('model-prediction')).toContainText('05:30');await page.waitForTimeout(1000);await expect(page.getByTestId('model-prediction')).toContainText('05:30');await expect(page.getByRole('slider')).toHaveValue('300');
+});
+
+test('all strategies share a clock; diagonal risk, dropout and custom assumptions work',async({page})=>{
+  await page.goto('/#experiment');await page.getByLabel('Scenario',{exact:true}).selectOption('diagonal');await expect(page.getByRole('heading',{name:'Complete eight-minute comparison'})).toBeVisible();await seek(page,'Site replay time',100);
+  const zones=page.locator('.zone');await expect(zones.nth(0)).toContainText('Command on');await expect(zones.nth(1)).toContainText('Command on');await expect(zones.nth(2)).toContainText('Command off');await page.getByRole('button',{name:'Reactive',exact:true}).click();await expect(page.getByRole('slider')).toHaveValue('100');
+  await page.getByLabel('Scenario',{exact:true}).selectOption('data-loss');await expect(page.getByRole('heading',{name:'Complete eight-minute comparison'})).toBeVisible();await seek(page,'Site replay time',110);await expect(page.locator('.map-card')).toContainText('Sensor interruption');await expect(page.locator('.stack')).toContainText('Unavailable');
+  await page.getByText('Change the assumptions',{exact:true}).click();await page.getByLabel('Flow per zone · L/min',{exact:true}).fill('1');await page.getByRole('button',{name:'Apply to all strategies'}).click();await expect(page.getByText(/Custom assumptions/)).toBeVisible();await expect(page.getByRole('slider')).toHaveValue('0');const continuous=page.locator('tbody tr').filter({hasText:'Continuous'});await expect(continuous).toContainText('32.000');
+});
+
+test('standalone fallback has saved predictions, trace metrics and no live-model claim',async({page})=>{
+  await blockExternal(page);await page.goto('http://127.0.0.1:8001/#replay');await expect(page.locator('.topbar')).toContainText('Saved replay mode');await expect(page.getByTestId('model-prediction')).toBeVisible();await expect(page.locator('.page-title')).toContainText('Saved inference replay');const observed=await page.getByTestId('model-prediction').innerText();
+  const response=await page.request.get('http://127.0.0.1:8000/v1/replay/lab_e4_drill90?second='+await page.getByRole('slider').inputValue());const live=await response.json();expect(observed).toContain(live.forecast.predicted_pm10_ug_m3.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}));
+  await page.goto('http://127.0.0.1:8001/#experiment');await expect(page.getByRole('heading',{name:'Complete eight-minute comparison'})).toBeVisible();await page.getByText('Change the assumptions',{exact:true}).click();await expect(page.getByRole('button',{name:'Apply to all strategies'})).toBeDisabled();await expect(page.locator('tbody tr').filter({hasText:'Predictive'})).toContainText('1.842');
+});
+
+test('all pages render without exceptions or broken local assets; mobile navigation fits',async({page})=>{
+  await blockExternal(page);const errors:string[]=[];page.on('pageerror',e=>errors.push(String(e)));const broken:string[]=[];page.on('response',r=>{if(r.status()>=400&&!new URL(r.url()).pathname.startsWith('/v1')&&!r.url().endsWith('/health'))broken.push(r.url());});
+  for(const route of ['overview','replay','experiment','results','system','team','present']){await page.goto(`/#${route}`);await expect(page.locator('main h1').first()).toBeVisible();if(route==='experiment')await expect(page.getByRole('heading',{name:'Complete eight-minute comparison'})).toBeVisible();if(route==='replay')await expect(page.getByTestId('model-prediction')).toBeVisible();if(route==='results'){await page.locator('.evidence-plot').scrollIntoViewIfNeeded();await expect.poll(()=>page.locator('.evidence-plot').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBeTruthy();}await page.screenshot({path:`../../tmp/screenshots/${route}-desktop.png`,fullPage:true,animations:'disabled'});}
+  await page.getByRole('button',{name:'Next slide',exact:true}).click();await expect(page.locator('.slide-message')).toContainText('changing dust plume');await page.keyboard.press('ArrowLeft');await expect(page.locator('.slide-message')).toContainText('Forecast dust');
+  await page.setViewportSize({width:390,height:844});await page.goto('/#overview');await page.getByRole('button',{name:'Open menu'}).click();await page.getByRole('link',{name:'Our team',exact:true}).click();await expect(page.getByRole('heading',{name:'Meet CTRL_V.'})).toBeVisible();await expect(page.getByRole('heading',{name:'Md. Arif Shekh'})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:'../../tmp/screenshots/team-mobile.png',fullPage:true});await page.goto('/#experiment');await expect(page.getByRole('heading',{name:'Complete eight-minute comparison'})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:'../../tmp/screenshots/experiment-mobile.png',fullPage:true});expect(errors).toEqual([]);expect(broken).toEqual([]);
+});
